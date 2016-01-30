@@ -3,6 +3,7 @@ export default function(config, callback) {
   import path from 'path';
   import fs from 'fs';
   import http from 'http';
+  import routes from './routes/index';
 
   var app = express();
 
