@@ -1,15 +1,15 @@
+import express from 'express';
+import path from 'path';
+import fs from 'fs';
+import http from 'http';
+import routes from './routes/index';
 export default function(config, callback) {
-  import express from 'express';
-  import path from 'path';
-  import fs from 'fs';
-  import http from 'http';
-  import routes from './routes/index';
 
   var app = express();
 
-  app.set('port', config.app.port);
+  app.set('port', 3000);
 
-  app.use(require("./routes/"));
+  app.use(routes);
 
   var server = http.createServer(app);
 
@@ -39,13 +39,13 @@ export default function(config, callback) {
   });
 
   server.on('listening', () => {
-    console.log('Listening on ' + app.get("port"));
+    console.log('Listening on ' + app.get('port'));
   });
   server.on('close', () => {
-    console.log("Server Stopped");
+    console.log('Server Stopped');
   });
 
-  server.listen(app.get("port"), () => {
+  server.listen(app.get('port'), () => {
     callback();
   });
 
