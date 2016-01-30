@@ -9,8 +9,7 @@
     "type": "git",
     "url": "https://github.com/uhlryk/my-express-react-seed.git"
   },
-  "scripts": {
-  },
+  "scripts": {},
   "license": "MIT",
   "author": "Krzysztof Sztompka <sztompka.krzysztof@gmail.com>",
   "bugs": {
@@ -18,8 +17,10 @@
   },
   "devDependencies": {
     "eslint": "^1.10.3",
-    "gulp": "^3.9.0",
+    "eslint-plugin-react": "^3.16.1",
+    "gulp": "^3.9.0"
   },
   "dependencies": {
+    "express": "^4.13.4"
   }
 }
