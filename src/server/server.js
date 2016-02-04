@@ -27,14 +27,13 @@ export default function(config, callback) {
 
   var server = http.createServer(app);
 
-  app.use((err, req, res, next) => {
-    res.sendData(err.status || 500, {
-      message: err.message,
-      error: {}
-    });
+  app.use(function(err, req, res, next){
+    logger.error('Express Handler ' + err.message + ' ' + err.stack);
+    res.status(err.status || 500).end();
   });
 
   server.on('error', (error) => {
+    logger.error('Node.js Handler', err);
     if (error.syscall !== 'listen') {
       throw error;
     }
