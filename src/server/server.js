@@ -4,6 +4,7 @@ import fs from 'fs';
 import http from 'http';
 import Logger from './utils/Logger';
 import routes from './routes/index';
+import morgan from 'morgan';
 
 export default function(config, callback) {
 
@@ -13,6 +14,14 @@ export default function(config, callback) {
 
   app.set('port', 3000);
   app.set('logger', logger);
+
+  app.use(morgan('combined',{
+    stream: {
+      write: (message) => {
+        logger.info(message);
+      }
+    }
+  }));
 
   app.use(routes);
 

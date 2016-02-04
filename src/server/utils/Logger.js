@@ -75,16 +75,6 @@ class Logger{
     return this.logger.error(msg, meta);
   }
 
-  /**
-   * Allow to log streams, It is designed to log morgan output
-   */
-  getStream() {
-    return {
-      write: (message) => {
-        this.logger.info(message);
-      }
-    };
-  }
 }
 
 export default Logger;
