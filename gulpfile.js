@@ -33,6 +33,10 @@ var serverWebpackOptions = {
   entry: [
     './src/server/app.js'
   ],
+  plugins: [
+    new webpack.BannerPlugin('require("source-map-support").install();',
+      { raw: true, entryOnly: false })
+  ],
   output: {
     path: path.join(__dirname, './dist/'),
     filename: 'server.js'
