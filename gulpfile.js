@@ -3,6 +3,7 @@ var fs = require('fs');
 var gutil = require("gulp-util");
 var webpack = require('webpack');
 var path = require('path');
+var nodemon= require('nodemon');
 
 var node_modules = {};
 fs.readdirSync('node_modules')
@@ -63,13 +64,41 @@ var serverWebpackOptions = {
   devtool: 'source-map'
 };
 
+function onBuild(done) {
+  return function(err, stats) {
+    if(err) {
+      console.log('Error', err);
+    }
+    else {
+      console.log(stats.toString());
+    }
 
+    if(done) {
+      done();
+    }
+  }
+}
 
-gulp.task('compile-server', function(done) {
-  webpack(serverWebpackOptions, function(err, stats) {
-    if(err) console.log(err);
-    gutil.log("[webpack]", stats.toString({}));
-    done();
+gulp.task('compile-dev-server', function(done) {
+  webpack(serverWebpackOptions).run(onBuild(done));
+});
+gulp.task('watch-dev-server', function() {
+  webpack(serverWebpackOptions).watch(100, function(err, stats) {
+    onBuild()(err, stats);
+    nodemon.restart();
   });
 });
 
+gulp.task('run-dev-server', ['watch-dev-server'], function() {
+  nodemon({
+    execMap: {
+      js: 'node'
+    },
+    script: path.join(__dirname, 'dist/server'),
+    ignore: ['*'],
+    watch: ['dist/'],
+    ext: 'noop'
+  }).on('restart', function() {
+    console.log('Restarted!');
+  });
+});
