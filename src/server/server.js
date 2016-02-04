@@ -2,12 +2,17 @@ import express from 'express';
 import path from 'path';
 import fs from 'fs';
 import http from 'http';
+import Logger from './utils/Logger';
 import routes from './routes/index';
+
 export default function(config, callback) {
+
+  var logger = new Logger();
 
   var app = express();
 
   app.set('port', 3000);
+  app.set('logger', logger);
 
   app.use(routes);
 
@@ -39,10 +44,10 @@ export default function(config, callback) {
   });
 
   server.on('listening', () => {
-    console.log('Listening on ' + app.get('port'));
+    logger.info('Listening on ' + app.get('port'));
   });
   server.on('close', () => {
-    console.log('Server Stopped');
+    logger.info('Server Stopped');
   });
 
   server.listen(app.get('port'), () => {
