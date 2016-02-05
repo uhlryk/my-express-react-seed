@@ -6,7 +6,7 @@ import Logger from './utils/Logger';
 import routes from './routes/index';
 import morgan from 'morgan';
 
-export default function(config, callback) {
+export function run(config, callback) {
 
   var logger = new Logger();
 

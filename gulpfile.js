@@ -4,6 +4,7 @@ var gutil = require("gulp-util");
 var webpack = require('webpack');
 var path = require('path');
 var nodemon= require('nodemon');
+var shell = require('gulp-shell')
 
 var node_modules = {};
 fs.readdirSync('node_modules')
@@ -32,13 +33,14 @@ var serverWebpackOptions = {
     ]
   },
   entry: [
-    './src/server/app.js'
+    './src/server/server.js'
   ],
   plugins: [
     new webpack.BannerPlugin('require("source-map-support").install();',
       { raw: true, entryOnly: false })
   ],
   output: {
+    libraryTarget: "commonjs",
     path: path.join(__dirname, './dist/'),
     filename: 'server.js'
   },
@@ -94,7 +96,7 @@ gulp.task('run-dev-server', ['watch-dev-server'], function() {
     execMap: {
       js: 'node'
     },
-    script: path.join(__dirname, 'dist/server'),
+    script: path.join(__dirname, 'app'),
     ignore: ['*'],
     watch: ['dist/'],
     ext: 'noop'
@@ -102,3 +104,7 @@ gulp.task('run-dev-server', ['watch-dev-server'], function() {
     console.log('Restarted!');
   });
 });
+
+gulp.task('test-server', ['compile-dev-server'], shell.task([
+  './node_modules/.bin/mocha --compilers js:babel-core/register tests/server'
+]));
