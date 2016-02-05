@@ -110,5 +110,5 @@ gulp.task('run-dev-server', ['watch-dev-server'], function() {
 });
 
 gulp.task('test-server', ['compile-dev-server'], shell.task([
-  './node_modules/.bin/mocha --compilers js:babel-core/register tests/server'
+  './node_modules/.bin/mocha tests/server'
 ]));
