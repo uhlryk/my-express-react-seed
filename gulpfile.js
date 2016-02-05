@@ -85,9 +85,13 @@ gulp.task('compile-dev-server', function(done) {
   webpack(serverWebpackOptions).run(onBuild(done));
 });
 gulp.task('watch-dev-server', function() {
+  var firstStart = false;
   webpack(serverWebpackOptions).watch(100, function(err, stats) {
     onBuild()(err, stats);
-    nodemon.restart();
+    if(firstStart === true) {
+      nodemon.restart();
+    }
+    firstStart = true;
   });
 });
 
