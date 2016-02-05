@@ -6,3 +6,4 @@ dist
 cache
 release
 log
+coverage
