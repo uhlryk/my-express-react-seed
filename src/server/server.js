@@ -6,9 +6,17 @@ import Logger from './utils/Logger';
 import routes from './routes/index';
 import morgan from 'morgan';
 
+import Models from './models/index';
+
 export function run(config, callback) {
 
   var logger = new Logger();
+
+  var models = Models({
+
+  })
+    ;
+  app.set('models', models);
 
   var app = express();
 
@@ -58,9 +66,15 @@ export function run(config, callback) {
     logger.info('Server Stopped');
   });
 
-  server.listen(app.get('port'), () => {
-    callback();
-  });
+  models.sequelize
+    .drop().then(function (){
+      return models.sequelize.sync();
+    })
+    .then(function (){
+      server.listen(app.get('port'), () => {
+        callback();
+      });
+    });
 
   return server;
 };
