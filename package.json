@@ -38,7 +38,9 @@
     "webpack": "^1.12.13"
   },
   "dependencies": {
+    "debug": "^2.2.0",
     "express": "^4.13.4",
+    "lodash": "^4.2.1",
     "morgan": "^1.6.1",
     "mysql": "^2.10.2",
     "pg": "^4.4.4",

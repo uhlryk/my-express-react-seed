@@ -2,12 +2,13 @@ var chai = require("chai");
 chai.use(require('chai-things'));
 var expect = chai.expect;
 var request = require('supertest');
+var config = require('../../src/configs/server-test.local');
 
 var server = require('../../dist/server.js');
 var app;
 describe("Check server ", function() {
   beforeEach(function(done) {
-    app = server.run({}, function() {
+    app = server.run(config, function() {
       done()
     });
   });

@@ -5,20 +5,22 @@ import http from 'http';
 import Logger from './utils/Logger';
 import routes from './routes/index';
 import morgan from 'morgan';
+import _ from 'lodash';
 
+import serverConfig from '../configs/server';
 import Models from './models/index';
 
-export function run(config, callback) {
-
+export function run(localConfig = {}, callback = null) {
+  var config = _.merge({}, serverConfig, localConfig);
   var logger = new Logger();
 
   var models = Models({
-    name: 'test',
-    user: 'test',
-    password: 'test',
-    port: 5432,
-    host: 'localhost',
-    dialect: 'postgres',
+    name: config.db.name,
+    user: config.db.user,
+    password: config.db.password,
+    port: config.db.port,
+    host: config.db.host,
+    dialect: config.db.dialect,
     logging: (args) => {
       logger.info(args);
     }
@@ -26,8 +28,9 @@ export function run(config, callback) {
 
   var app = express();
 
+  app.set('config', config);
   app.set('models', models);
-  app.set('port', 3000);
+  app.set('port', config.port);
   app.set('logger', logger);
 
   app.use(morgan('combined',{
@@ -79,7 +82,9 @@ export function run(config, callback) {
     })
     .then(function (){
       server.listen(app.get('port'), () => {
-        callback();
+        if(callback) {
+          callback();
+        }
       });
     });
 

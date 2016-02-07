@@ -8,3 +8,4 @@ release
 log
 coverage
 plato
+src/configs/*.local.js
