@@ -13,13 +13,20 @@ export function run(config, callback) {
   var logger = new Logger();
 
   var models = Models({
-
-  })
-    ;
-  app.set('models', models);
+    name: 'test',
+    user: 'test',
+    password: 'test',
+    port: 5432,
+    host: 'localhost',
+    dialect: 'postgres',
+    logging: (args) => {
+      logger.info(args);
+    }
+  });
 
   var app = express();
 
+  app.set('models', models);
   app.set('port', 3000);
   app.set('logger', logger);
 

@@ -1,26 +1,26 @@
-import fs from 'fs';
-import path from 'path';
 import Sequelize from 'sequelize';
 
+import userModel from './user';
+//import all models
+
+function importModel(sequelize, model) {
+  return sequelize.import(model.name, (sequelize, DataTypes) => model(sequelize, DataTypes));
+}
 export default function(config){
-  var sequelize = new Sequelize(config.name, config.user, config.pass, {
+  var sequelize = new Sequelize(config.name, config.user, config.password, {
     host : config.host,
-    dialect : config.type,
+    dialect : config.dialect,
     port : config.port,
     logging: config.logging
   });
-  var db = {};
+  importModel = importModel.bind(this, sequelize);
 
-  fs.readdirSync(__dirname)
-    .filter(function(file) {
-      return (file.indexOf('.') !== 0) && (file !== 'index.js');
-    })
-    .forEach(function(file) {
-      var model = sequelize['import'](path.join(__dirname, file));
-      db[model.name] = model;
-    });
+  var db = {
+    user: importModel(userModel)
+    //add all imported models
+  };
 
-  Object.keys(db).forEach(function(modelName) {
+  Object.keys(db).forEach((modelName) => {
     if ('associate' in db[modelName]) {
       db[modelName].associate(db);
     }
