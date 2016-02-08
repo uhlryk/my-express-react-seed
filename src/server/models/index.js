@@ -1,6 +1,7 @@
 import Sequelize from 'sequelize';
 
 import userModel from './user';
+import itemModel from './item';
 //import all models
 
 function importModel(sequelize, model) {
@@ -16,7 +17,8 @@ export default function(config){
   importModel = importModel.bind(this, sequelize);
 
   var db = {
-    user: importModel(userModel)
+    user: importModel(userModel),
+    item: importModel(itemModel)
     //add all imported models
   };
 
