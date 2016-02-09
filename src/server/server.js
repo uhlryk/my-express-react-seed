@@ -6,6 +6,7 @@ import Logger from './utils/Logger';
 import routes from './routes/index';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
+import expressValidator from 'express-validator';
 import _ from 'lodash';
 
 import serverConfig from '../configs/server';
@@ -36,7 +37,7 @@ export function run(localConfig = {}, callback = null) {
   var app = express();
 
   app.use(bodyParser.json());
-
+  app.use(expressValidator());
   app.set('config', config);
   app.set('models', models);
   app.set('port', config.port);
