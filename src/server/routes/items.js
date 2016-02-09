@@ -17,15 +17,14 @@ router.get('/items', (req, res) => {
 });
 
 router.post('/items', (req, res) => {
-  var logger = req.app.get('logger');
-  var models = req.app.get('models');
-  models.item.create({
+  var actions = req.app.get('actions');
+  actions.items.create({
     name: req.body.name
-  }).then((item) => {
+  }, (err, response) => {
+    if(err) {
+      return res.status(httpStatus.NOT_FOUND).end();
+    }
     res.status(httpStatus.OK).end();
-  }).catch((err) => {
-    logger.error('DB error items', err);
-    return res.status(httpStatus.NOT_FOUND).end();
   });
 });
 

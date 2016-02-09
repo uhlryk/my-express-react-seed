@@ -12,13 +12,14 @@ describe("Check server ", function() {
       done()
     });
   });
-  it("should return status code 200 at empty get", function(done) {
+  it("should allow to create item", function(done){
     request(app)
-    .get('/')
-    .expect(200)
-    .end(function(err, res) {
-      done();
-    })
+      .post('/items')
+      .send({name : 'dummy name'})
+      .end(function(err, res){
+        expect(res.status).to.be.equal(200);
+        done();
+      });
   });
   after(function(done){
     app.close();

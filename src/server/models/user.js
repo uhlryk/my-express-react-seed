@@ -1,4 +1,3 @@
-
 export default function user(sequelize, DataTypes) {
   return sequelize.define('users', {
     email: {

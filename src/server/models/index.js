@@ -14,11 +14,10 @@ export default function(config){
     port : config.port,
     logging: config.logging
   });
-  importModel = importModel.bind(this, sequelize);
-
+  var importModelBind = importModel.bind(this, sequelize);
   var db = {
-    user: importModel(userModel),
-    item: importModel(itemModel)
+    user: importModelBind(userModel),
+    item: importModelBind(itemModel)
     //add all imported models
   };
 
