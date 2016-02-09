@@ -1,6 +1,6 @@
 export default function (globals) {
   return function createItem(params, callback) {
-    globals.models.item.create({
+    return globals.models.item.create({
       name: params.name
     }).then((item) => {
       callback(null, item);
