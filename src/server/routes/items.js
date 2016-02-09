@@ -21,7 +21,9 @@ router.post('/items', (req, res) => {
   actions.items.create({
     name: req.body.name
   }, (err, response) => {
-    if(err) {
+    if(err && err.type === 'VALIDATION') {
+      return res.status(httpStatus.UNPROCESSABLE_ENTITY).end();
+    } else if(err) {
       return res.status(httpStatus.NOT_FOUND).end();
     }
     res.status(httpStatus.OK).end();

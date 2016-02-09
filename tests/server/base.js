@@ -7,7 +7,7 @@ var config = require('../../src/configs/server-test.local');
 var server = require('../../dist/server.js');
 var app;
 describe("Check server ", function() {
-  beforeEach(function(done) {
+  before(function(done) {
     app = server.run(config, function() {
       done()
     });

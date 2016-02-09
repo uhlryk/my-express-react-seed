@@ -3,11 +3,12 @@ chai.use(require('chai-things'));
 var expect = chai.expect;
 var request = require('supertest');
 var config = require('../../src/configs/server-test.local');
+var httpStatus = require('http-status-codes');
 
 var server = require('../../dist/server.js');
 var app;
 describe("Check server ", function() {
-  beforeEach(function(done) {
+  before(function(done) {
     app = server.run(config, function() {
       done()
     });
@@ -17,7 +18,15 @@ describe("Check server ", function() {
       .post('/items')
       .send({name : 'dummy name'})
       .end(function(err, res){
-        expect(res.status).to.be.equal(200);
+        expect(res.status).to.be.equal(httpStatus.OK);
+        done();
+      });
+  });
+  it("should disallow to create item when no params", function(done){
+    request(app)
+      .post('/items')
+      .end(function(err, res){
+        expect(res.status).to.be.equal(httpStatus.UNPROCESSABLE_ENTITY);
         done();
       });
   });
