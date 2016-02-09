@@ -30,6 +30,14 @@ describe("Check server ", function() {
         done();
       });
   });
+  it("should show items list", function(done){
+    request(app)
+      .get('/items')
+      .end(function(err, res){
+        expect(res.status).to.be.equal(httpStatus.OK);
+        done();
+      });
+  });
   after(function(done){
     app.close();
     done();

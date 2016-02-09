@@ -5,18 +5,19 @@ let router = new express.Router();
 
 router.get('/items', (req, res) => {
   var logger = req.app.get('logger');
-  var models = req.app.get('models');
-  models.item.findAll()
-    .then((items) => {
-      res.status(httpStatus.OK).json(items);
-    })
-    .catch((err) => {
-      logger.error('DB error products', err);
-      return res.status(httpStatus.NOT_FOUND).end();
-    });
+  var actions = req.app.get('actions');
+  actions.items.list({
+  }, (err, response) => {
+    if(err) {
+      logger.error('DB error item', err);
+      return res.status(httpStatus.INTERNAL_SERVER_ERROR).end();
+    }
+    res.status(httpStatus.OK).json(response);
+  });
 });
 
 router.post('/items', (req, res) => {
+  var logger = req.app.get('logger');
   var actions = req.app.get('actions');
   actions.items.create({
     name: req.body.name
@@ -24,9 +25,10 @@ router.post('/items', (req, res) => {
     if(err && err.type === 'VALIDATION') {
       return res.status(httpStatus.UNPROCESSABLE_ENTITY).end();
     } else if(err) {
-      return res.status(httpStatus.NOT_FOUND).end();
+      logger.error('DB error item', err);
+      return res.status(httpStatus.INTERNAL_SERVER_ERROR).end();
     }
-    res.status(httpStatus.OK).end();
+    res.status(httpStatus.OK).json(response);
   });
 });
 
