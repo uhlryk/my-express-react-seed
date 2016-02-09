@@ -38,6 +38,7 @@
     "webpack": "^1.12.13"
   },
   "dependencies": {
+    "body-parser": "^1.14.2",
     "debug": "^2.2.0",
     "express": "^4.13.4",
     "http-status-codes": "^1.0.6",

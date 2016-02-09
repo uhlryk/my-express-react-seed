@@ -5,10 +5,12 @@ import http from 'http';
 import Logger from './utils/Logger';
 import routes from './routes/index';
 import morgan from 'morgan';
+import bodyParser from 'body-parser';
 import _ from 'lodash';
 
 import serverConfig from '../configs/server';
 import Models from './models/index';
+import Actions from './actions/index';
 
 export function run(localConfig = {}, callback = null) {
   var config = _.merge({}, serverConfig, localConfig);
@@ -26,12 +28,20 @@ export function run(localConfig = {}, callback = null) {
     }
   });
 
+  var actions = Actions({
+    logger: logger,
+    models: models
+  });
+
   var app = express();
+
+  app.use(bodyParser.json());
 
   app.set('config', config);
   app.set('models', models);
   app.set('port', config.port);
   app.set('logger', logger);
+  app.set('actions', actions);
 
   app.use(morgan('combined',{
     stream: {
