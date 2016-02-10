@@ -1,4 +1,4 @@
-var chai = require("chai");
+var chai = require('chai');
 chai.use(require('chai-things'));
 var expect = chai.expect;
 var request = require('supertest');
@@ -7,13 +7,13 @@ var httpStatus = require('http-status-codes');
 
 var server = require('../../dist/server.js');
 var app;
-describe("Check server ", function() {
+describe('Check server', function() {
   before(function(done) {
     app = server.run(config, function() {
       done()
     });
   });
-  it("should allow to create item", function(done){
+  it('should allow to create item', function(done){
     request(app)
       .post('/items')
       .send({name : 'dummy name'})
@@ -22,7 +22,7 @@ describe("Check server ", function() {
         done();
       });
   });
-  it("should disallow to create item when no params", function(done){
+  it('should disallow to create item when no params', function(done){
     request(app)
       .post('/items')
       .end(function(err, res){
@@ -30,7 +30,7 @@ describe("Check server ", function() {
         done();
       });
   });
-  it("should show items list", function(done){
+  it('should show items list', function(done){
     request(app)
       .get('/items')
       .end(function(err, res){
@@ -38,7 +38,7 @@ describe("Check server ", function() {
         done();
       });
   });
-  it("should show single item", function(done){
+  it('should show single item', function(done){
     request(app)
       .get('/items/1')
       .end(function(err, res){
@@ -46,7 +46,7 @@ describe("Check server ", function() {
         done();
       });
   });
-  it("should not find item when wrong id", function(done){
+  it('should not find item when wrong id', function(done){
     request(app)
       .get('/items/100')
       .end(function(err, res){
@@ -54,7 +54,7 @@ describe("Check server ", function() {
         done();
       });
   });
-  it("should update item", function(done){
+  it('should update item', function(done){
     request(app)
       .put('/items/1')
       .send({name : 'new dummy name'})
@@ -64,7 +64,7 @@ describe("Check server ", function() {
         done();
       });
   });
-  it("should not find when tried to update not existing item", function(done){
+  it('should not find when tried to update not existing item', function(done){
     request(app)
       .put('/items/100')
       .send({name : 'new dummy name'})
@@ -73,7 +73,7 @@ describe("Check server ", function() {
         done();
       });
   });
-  it("should delete item", function(done){
+  it('should delete item', function(done){
     request(app)
       .delete('/items/1')
       .end(function(err, res){
@@ -81,7 +81,7 @@ describe("Check server ", function() {
         done();
       });
   });
-  it("should not find when tried to delete not existing item", function(done){
+  it('should not find when tried to delete not existing item', function(done){
     request(app)
       .delete('/items/1')
       .end(function(err, res){
