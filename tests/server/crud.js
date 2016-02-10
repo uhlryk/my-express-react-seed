@@ -73,6 +73,22 @@ describe("Check server ", function() {
         done();
       });
   });
+  it("should delete item", function(done){
+    request(app)
+      .delete('/items/1')
+      .end(function(err, res){
+        expect(res.status).to.be.equal(httpStatus.OK);
+        done();
+      });
+  });
+  it("should not find when tried to delete not existing item", function(done){
+    request(app)
+      .delete('/items/1')
+      .end(function(err, res){
+        expect(res.status).to.be.equal(httpStatus.NOT_FOUND);
+        done();
+      });
+  });
   after(function(done){
     app.close();
     done();

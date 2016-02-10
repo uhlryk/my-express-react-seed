@@ -1,7 +1,7 @@
 import validator from 'validator';
 
 export default function (globals) {
-  return function createItem(entity, params, callback) {
+  return function updateItem(entity, params, callback) {
     var name = params.name;
 
     if(name && validator.isLength(name, {min:0, max:60})) {
