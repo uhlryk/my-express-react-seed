@@ -54,6 +54,25 @@ describe("Check server ", function() {
         done();
       });
   });
+  it("should update item", function(done){
+    request(app)
+      .put('/items/1')
+      .send({name : 'new dummy name'})
+      .end(function(err, res){
+        expect(res.status).to.be.equal(httpStatus.OK);
+        expect(res.body.name).to.be.equal('new dummy name');
+        done();
+      });
+  });
+  it("should not find when tried to update not existing item", function(done){
+    request(app)
+      .put('/items/100')
+      .send({name : 'new dummy name'})
+      .end(function(err, res){
+        expect(res.status).to.be.equal(httpStatus.NOT_FOUND);
+        done();
+      });
+  });
   after(function(done){
     app.close();
     done();
