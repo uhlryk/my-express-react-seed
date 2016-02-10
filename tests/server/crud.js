@@ -38,6 +38,22 @@ describe("Check server ", function() {
         done();
       });
   });
+  it("should show single item", function(done){
+    request(app)
+      .get('/items/1')
+      .end(function(err, res){
+        expect(res.status).to.be.equal(httpStatus.OK);
+        done();
+      });
+  });
+  it("should not find item when wrong id", function(done){
+    request(app)
+      .get('/items/100')
+      .end(function(err, res){
+        expect(res.status).to.be.equal(httpStatus.NOT_FOUND);
+        done();
+      });
+  });
   after(function(done){
     app.close();
     done();
