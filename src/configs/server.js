@@ -7,8 +7,7 @@ var config = {
     host: '',
     dialect: ''
   },
-  port: 3000,
-  passwordSecret: 'someSecret'
+  port: 3000
 }
 
 module.exports = config;

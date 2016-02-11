@@ -3,6 +3,7 @@ import itemsList from './items/list';
 import itemsUpdate from './items/update';
 import itemsDelete from './items/delete';
 
+import usersCreate from './users/create';
 
 export default function(globals){
   return {
@@ -11,6 +12,9 @@ export default function(globals){
       list: itemsList(globals),
       update: itemsUpdate(globals),
       delete: itemsDelete(globals)
+    },
+    users: {
+      create: usersCreate(globals)
     }
   }
 }
