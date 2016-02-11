@@ -17,10 +17,10 @@ export default function (globals) {
       var genSalt = Promise.promisify(bcrypt.genSalt);
       var createHash = Promise.promisify(bcrypt.hash);
 
-      genSalt(10).then((error, salt) => {
+      genSalt(10).then((salt) => {
         return createHash(password, salt);
-      }).then((error, hash) => {
-        return globals.models.item.create({
+      }).then((hash) => {
+        return globals.models.user.create({
           email: normalizedEmail,
           password: hash
         });

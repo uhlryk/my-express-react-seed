@@ -7,7 +7,7 @@ var httpStatus = require('http-status-codes');
 
 var server = require('../../dist/server.js');
 var app;
-describe('Check server', function() {
+describe('Check crud', function() {
   before(function(done) {
     app = server.run(config, function() {
       done()
