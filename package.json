@@ -38,6 +38,7 @@
     "webpack": "^1.12.13"
   },
   "dependencies": {
+    "bcrypt": "^0.8.5",
     "bluebird": "^3.2.2",
     "body-parser": "^1.14.2",
     "debug": "^2.2.0",
