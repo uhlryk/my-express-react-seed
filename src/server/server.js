@@ -31,7 +31,8 @@ export function run(localConfig = {}, callback = null) {
 
   var actions = Actions({
     logger: logger,
-    models: models
+    models: models,
+    config: config
   });
 
   var app = express();
