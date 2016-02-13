@@ -22,7 +22,8 @@ export default function (globals) {
       }).then((hash) => {
         return globals.models.user.create({
           email: normalizedEmail,
-          password: hash
+          password: hash,
+          status: params.status
         });
       }).then((item) => {
         callback(null, item);
