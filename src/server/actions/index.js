@@ -4,6 +4,10 @@ import itemsUpdate from './items/update';
 import itemsDelete from './items/delete';
 
 import usersCreate from './users/create';
+import usersList from './users/list';
+
+import createToken from './authentications/createToken';
+import comparePassword from './authentications/comparePassword';
 
 export default function(globals){
   return {
@@ -14,7 +18,12 @@ export default function(globals){
       delete: itemsDelete(globals)
     },
     users: {
-      create: usersCreate(globals)
+      create: usersCreate(globals),
+      list: usersList(globals)
+    },
+    authentications: {
+      createToken: createToken(globals),
+      comparePassword: comparePassword(globals)
     }
   }
 }

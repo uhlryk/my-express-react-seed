@@ -31,6 +31,17 @@ describe('Check user', function() {
         done();
       });
   });
+  it('should authenticate user', function(done) {
+    request(app)
+      .post('/authentications')
+      .send({email : 'test1@test.test'})
+      .send({password : 'somePassword'})
+      .end(function(err, res){
+        expect(res.status).to.be.equal(httpStatus.OK);
+        expect(res.body.token).to.be.a("string");
+        done();
+      });
+  });
   after(function(done){
     app.close();
     done();
