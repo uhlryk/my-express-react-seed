@@ -1,5 +1,6 @@
 import express from 'express';
 import httpStatus from 'http-status-codes';
+import ValidationError from '../errors/ValidationError';
 
 let router = new express.Router();
 
@@ -13,7 +14,7 @@ router.post('/users', (req, res) => {
     password: req.body.password,
     status: config.enableEmailActivation === true ? models.user.STATUS.INACTIVE : models.user.STATUS.ACTIVE
   }, (err, users) => {
-    if(err && err.type === 'VALIDATION') {
+    if(err instanceof ValidationError) {
       return res.status(httpStatus.UNPROCESSABLE_ENTITY).end();
     } else if(err) {
       logger.error('server error users', err);

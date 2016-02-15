@@ -1,5 +1,6 @@
 import express from 'express';
 import httpStatus from 'http-status-codes';
+import ValidationError from '../errors/ValidationError';
 
 let router = new express.Router();
 
@@ -22,7 +23,7 @@ router.post('/items', (req, res) => {
   actions.items.create({
     name: req.body.name
   }, (err, item) => {
-    if(err && err.type === 'VALIDATION') {
+    if(err instanceof ValidationError) {
       return res.status(httpStatus.UNPROCESSABLE_ENTITY).end();
     } else if(err) {
       logger.error('DB error item', err);
@@ -65,7 +66,7 @@ router.route('/items/:id')
       actions.items.update(items[0], {
         name: req.body.name
       }, (err, item) => {
-        if(err && err.type === 'VALIDATION') {
+        if(err instanceof ValidationError) {
           return res.status(httpStatus.UNPROCESSABLE_ENTITY).end();
         } else if(err) {
           logger.error('DB error item', err);

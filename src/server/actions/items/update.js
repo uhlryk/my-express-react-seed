@@ -1,4 +1,5 @@
 import validator from 'validator';
+import ValidationError from '../../errors/ValidationError';
 
 export default function (globals) {
   return function updateItem(entity, params, callback) {
@@ -14,7 +15,7 @@ export default function (globals) {
         callback(err);
       });
     } else {
-      callback({ type: 'VALIDATION'});
+      callback(new ValidationError('name'));
     }
   }
 }
