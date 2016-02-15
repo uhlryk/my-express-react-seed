@@ -7,6 +7,7 @@ var config = {
     host: '',
     dialect: ''
   },
+  dropDb: false,
   port: 3000,
   jwtToken:{
     secret: 'jbfaf2323uru09',

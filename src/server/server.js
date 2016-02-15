@@ -88,21 +88,18 @@ export function run(localConfig = {}, callback = null) {
     logger.info('Server Stopped');
   });
 
-  models.sequelize
-    .drop().then(function (){
-      return models.sequelize.sync();
-    })
-    .then(function (){
-      server.listen(app.get('port'), () => {
-        if(callback) {
-          callback({
-            server: server,
-            actions: actions,
-            models: models
-          });
-        }
-      });
+  models.sequelize.sync({
+    force: config.dropDb
+  }).then(function (){
+    server.listen(app.get('port'), () => {
+      if(callback) {
+        callback({
+          actions: actions,
+          models: models
+        });
+      }
     });
+  });
 
   return server;
 };
