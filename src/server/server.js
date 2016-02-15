@@ -95,7 +95,11 @@ export function run(localConfig = {}, callback = null) {
     .then(function (){
       server.listen(app.get('port'), () => {
         if(callback) {
-          callback();
+          callback({
+            server: server,
+            actions: actions,
+            models: models
+          });
         }
       });
     });
