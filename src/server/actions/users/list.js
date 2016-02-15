@@ -10,7 +10,9 @@ export default function (globals) {
     var options = {
       where: {}
     };
-    options.where.status = status;
+    if(status) {
+      options.where.status = status;
+    }
     options.limit = limit;
 
     if(id) {

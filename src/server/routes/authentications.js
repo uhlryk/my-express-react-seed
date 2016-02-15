@@ -31,7 +31,6 @@ router.post('/authentications/', function(req, res, next){
           });
         });
       } else { //wrong password
-        console.log('A3');
         return res.status(httpStatus.UNPROCESSABLE_ENTITY).end();
       }
     });

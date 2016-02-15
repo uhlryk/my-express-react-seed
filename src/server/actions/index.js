@@ -8,6 +8,7 @@ import usersList from './users/list';
 
 import createToken from './authentications/createToken';
 import comparePassword from './authentications/comparePassword';
+import verifyToken from './authentications/verifyToken';
 
 export default function(globals){
   return {
@@ -23,7 +24,8 @@ export default function(globals){
     },
     authentications: {
       createToken: createToken(globals),
-      comparePassword: comparePassword(globals)
+      comparePassword: comparePassword(globals),
+      verifyToken: verifyToken(globals)
     }
   }
 }
