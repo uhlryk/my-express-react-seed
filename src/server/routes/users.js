@@ -13,7 +13,7 @@ router.post('/users', (req, res) => {
     email: req.body.email,
     password: req.body.password,
     status: config.enableEmailActivation === true ? models.user.STATUS.INACTIVE : models.user.STATUS.ACTIVE
-  }, (err, users) => {
+  }, (err, user) => {
     if(err instanceof ValidationError) {
       return res.status(httpStatus.UNPROCESSABLE_ENTITY).end();
     } else if(err) {

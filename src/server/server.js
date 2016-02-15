@@ -63,7 +63,7 @@ export function run(localConfig = {}, callback = null) {
   });
 
   server.on('error', (error) => {
-    logger.error('Node.js Handler', err);
+    logger.error('Node.js Handler', error);
     if (error.syscall !== 'listen') {
       throw error;
     }

@@ -1,6 +1,7 @@
 import express from 'express';
-var httpStatus = require('http-status-codes');
+import httpStatus from 'http-status-codes';
 import ValidationError from '../../errors/ValidationError';
+import items from '../items';
 
 let router = new express.Router();
 
@@ -40,6 +41,8 @@ router.use('/accounts/', (req, res, next) => {
     return res.status(httpStatus.UNAUTHORIZED).send('Access denied');
   }
 });
+
+router.use('/accounts', items);
 
 router.get('/accounts', (req, res) => {
   res.status(200).send('App is running');
