@@ -11,6 +11,7 @@ import _ from 'lodash';
 
 import serverConfig from '../configs/server';
 import Models from './models/index';
+import EmailSender from './utils/EmailSender';
 import Actions from './actions/index';
 
 export function run(localConfig = {}, callback = null) {
@@ -35,6 +36,11 @@ export function run(localConfig = {}, callback = null) {
     config: config
   });
 
+  var emailSender = EmailSender({
+    logger: logger,
+    config: config
+  });
+
   var app = express();
 
   app.use(bodyParser.json());
@@ -44,6 +50,7 @@ export function run(localConfig = {}, callback = null) {
   app.set('port', config.port);
   app.set('logger', logger);
   app.set('actions', actions);
+  app.set('emailSender', emailSender);
 
   app.use(morgan('combined',{
     stream: {
