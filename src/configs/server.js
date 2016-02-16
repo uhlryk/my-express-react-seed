@@ -7,6 +7,7 @@ var config = {
     host: '',
     dialect: ''
   },
+  enableEmailActivation: true,
   dropDb: false,
   port: 3000,
   jwtToken:{
@@ -21,7 +22,9 @@ var config = {
     //  user: 'username',
     //  pass: 'password'
     //}
-  }
+  },
+  host: 'your.domain.com',
+  fromEmail: 'your.email@test.com'
 }
 
 module.exports = config;

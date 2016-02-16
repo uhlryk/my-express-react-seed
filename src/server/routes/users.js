@@ -21,7 +21,19 @@ router.post('/users', (req, res) => {
       return res.status(httpStatus.INTERNAL_SERVER_ERROR).end();
     }
     if(config.enableEmailActivation) {
-      //TODO: send email
+      actions.users.createActivationToken({
+        id: user.id
+      }, (err, tokenResponse) => {
+        actions.users.sendActivationLink({
+          token: tokenResponse.token,
+          targetEmail: user.email
+        }, (error, response) => {
+          if(error) {
+            logger.error('send activation email error', error);
+          }
+          res.status(httpStatus.OK).end();
+        });
+      });
     } else {
       res.status(httpStatus.OK).end();
     }

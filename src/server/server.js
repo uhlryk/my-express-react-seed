@@ -18,6 +18,8 @@ export function run(localConfig = {}, callback = null) {
   var config = _.merge({}, serverConfig, localConfig);
   var logger = new Logger();
 
+  var serverRootPath = __dirname;
+
   var models = Models({
     name: config.db.name,
     user: config.db.user,
@@ -30,16 +32,20 @@ export function run(localConfig = {}, callback = null) {
     }
   });
 
+  var emailSender = EmailSender({
+    logger: logger,
+    config: config,
+    templateDir: path.join(serverRootPath, 'emailTemplates')
+  });
+
   var actions = Actions({
     logger: logger,
     models: models,
-    config: config
+    config: config,
+    emailSender: emailSender
   });
 
-  var emailSender = EmailSender({
-    logger: logger,
-    config: config
-  });
+
 
   var app = express();
 

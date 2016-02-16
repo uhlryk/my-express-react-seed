@@ -50,7 +50,7 @@ var serverWebpackOptions = {
   },
   node: {
     __filename: true,
-    __dirname: false
+    __dirname: true
   },
   resolve: {},
   externals: node_modules,

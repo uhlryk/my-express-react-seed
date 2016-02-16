@@ -1,0 +1,18 @@
+import validator from 'validator';
+import bcrypt from 'bcrypt';
+import Promise from 'bluebird';
+import ValidationError from '../../errors/ValidationError';
+
+export default function (globals) {
+  return function sendActivationLink(params, callback) {
+    var token = params.token;
+    var targetEmail = params.targetEmail;
+    globals.emailSender('activationLink',globals.config.fromEmail, targetEmail, 'activation user', {
+      link: globals.config.host + '/activateUser/' + token
+    }, (error, response) => {
+      callback(error, response);
+    });
+
+
+  }
+}
