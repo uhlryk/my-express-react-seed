@@ -8,6 +8,7 @@ var config = {
     dialect: ''
   },
   enableEmailActivation: true,
+  enableEmailTest: false,
   dropDb: false,
   port: 3000,
   jwtToken:{

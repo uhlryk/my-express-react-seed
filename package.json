@@ -52,6 +52,7 @@
     "mysql": "^2.10.2",
     "nodemailer": "^2.1.0",
     "nodemailer-smtp-transport": "^2.2.1",
+    "nodemailer-stub-transport": "^1.0.0",
     "pg": "^4.4.4",
     "pg-hstore": "^2.3.2",
     "sequelize": "^3.19.2",
