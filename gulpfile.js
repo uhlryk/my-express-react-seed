@@ -110,7 +110,7 @@ gulp.task('run-dev-server', ['watch-dev-server'], function() {
 });
 
 gulp.task('test-server', ['compile-dev-server'], shell.task([
-  './node_modules/.bin/mocha  --check-leaks --timeout 17000 tests/server'
+  './node_modules/.bin/mocha  --check-leaks --timeout 3000 tests/server'
 ]));
 gulp.task('coverage-test-server', ['compile-dev-server'], shell.task([
   './node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha tests/server --print both --recursive'

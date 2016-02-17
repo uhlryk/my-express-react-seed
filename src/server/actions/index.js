@@ -5,8 +5,10 @@ import itemsDelete from './items/delete';
 
 import usersCreate from './users/create';
 import usersList from './users/list';
+import usersUpdate from './users/update';
 import usersSendActivationLink from './users/sendActivationLink';
 import usersCreateActivationToken from './users/createActivationToken';
+import usersVerifyActivationToken from './users/verifyActivationToken';
 
 import createToken from './authentications/createToken';
 import comparePassword from './authentications/comparePassword';
@@ -23,8 +25,10 @@ export default function(globals){
     users: {
       create: usersCreate(globals),
       list: usersList(globals),
+      update: usersUpdate(globals),
       sendActivationLink: usersSendActivationLink(globals),
-      createActivationToken: usersCreateActivationToken(globals)
+      createActivationToken: usersCreateActivationToken(globals),
+      verifyActivationToken: usersVerifyActivationToken(globals),
     },
     authentications: {
       createToken: createToken(globals),
