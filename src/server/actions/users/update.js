@@ -1,6 +1,3 @@
-import validator from 'validator';
-import ValidationError from '../../errors/ValidationError';
-
 export default function (globals) {
   return function updateUser(entity, params, callback) {
     if(params.status) {

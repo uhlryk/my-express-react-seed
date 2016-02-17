@@ -1,5 +1,3 @@
-import validator from 'validator';
-
 export default function (globals) {
   return function listUsers(params, callback) {
     var id = params.id;

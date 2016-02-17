@@ -1,6 +1,6 @@
 import express from 'express';
 import httpStatus from 'http-status-codes';
-import ValidationError from '../errors/ValidationError';
+import validator from 'validator';
 
 let router = new express.Router();
 
@@ -45,35 +45,44 @@ router.post('/users', (req, res) => {
   var config = req.app.get('config');
   var actions = req.app.get('actions');
   var models = req.app.get('models');
-  actions.users.create({
-    email: req.body.email,
-    password: req.body.password,
-    status: config.enableEmailActivation === true ? models.user.STATUS.INACTIVE : models.user.STATUS.ACTIVE
-  }, (err, user) => {
-    if(err instanceof ValidationError) {
-      return res.status(httpStatus.UNPROCESSABLE_ENTITY).end();
-    } else if(err) {
-      logger.error('server error users', err);
-      return res.status(httpStatus.INTERNAL_SERVER_ERROR).end();
-    }
-    if(config.enableEmailActivation) {
-      actions.users.createActivationToken({
-        id: user.id
-      }, (err, tokenResponse) => {
-        actions.users.sendActivationLink({
-          token: tokenResponse.token,
-          targetEmail: user.email
-        }, (error, response) => {
-          if(error) {
-            logger.error('send activation email error', error);
-          }
+
+  var email = validator.trim(req.body.email).toLowerCase();
+  var password = req.body.password;
+  if(email && validator.isEmail(email) && validator.isLength(email, {min:3, max:60})) {
+    if(password && validator.isLength(password, {min:6, max:60})) {
+      actions.users.create({
+        email: email,
+        password: password,
+        status: config.enableEmailActivation === true ? models.user.STATUS.INACTIVE : models.user.STATUS.ACTIVE
+      }, (err, user) => {
+        if(err) {
+          logger.error('server error users', err);
+          return res.status(httpStatus.INTERNAL_SERVER_ERROR).end();
+        }
+        if(config.enableEmailActivation) {
+          actions.users.createActivationToken({
+            id: user.id
+          }, (err, tokenResponse) => {
+            actions.users.sendActivationLink({
+              token: tokenResponse.token,
+              targetEmail: user.email
+            }, (error, response) => {
+              if(error) {
+                logger.error('send activation email error', error);
+              }
+              res.status(httpStatus.OK).end();
+            });
+          });
+        } else {
           res.status(httpStatus.OK).end();
-        });
+        }
       });
     } else {
-      res.status(httpStatus.OK).end();
+      return res.status(httpStatus.UNPROCESSABLE_ENTITY).end();
     }
-  });
+  } else {
+    return res.status(httpStatus.UNPROCESSABLE_ENTITY).end();
+  }
 });
 
 export default router;

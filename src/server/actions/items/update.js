@@ -1,21 +1,13 @@
-import validator from 'validator';
-import ValidationError from '../../errors/ValidationError';
-
 export default function (globals) {
   return function updateItem(entity, params, callback) {
     var name = params.name;
 
-    if(name && validator.isLength(name, {min:0, max:60})) {
-
-      entity.name = name;
-      entity.save().then(() => {
-        callback(null, entity);
-      }).catch((err) => {
-        globals.logger.error('DB error items', err);
-        callback(err);
-      });
-    } else {
-      callback(new ValidationError('name'));
-    }
+    entity.name = name;
+    entity.save().then(() => {
+      callback(null, entity);
+    }).catch((err) => {
+      globals.logger.error('DB error items', err);
+      callback(err);
+    });
   }
 }

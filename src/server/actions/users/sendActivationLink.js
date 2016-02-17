@@ -1,7 +1,5 @@
-import validator from 'validator';
 import bcrypt from 'bcrypt';
 import Promise from 'bluebird';
-import ValidationError from '../../errors/ValidationError';
 
 export default function (globals) {
   return function sendActivationLink(params, callback) {

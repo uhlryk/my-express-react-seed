@@ -1,6 +1,5 @@
 import express from 'express';
 import httpStatus from 'http-status-codes';
-import ValidationError from '../../errors/ValidationError';
 import items from '../items';
 
 let router = new express.Router();
@@ -23,9 +22,7 @@ router.use('/accounts/', (req, res, next) => {
         status: models.user.STATUS.ACTIVE
       }, (err, users) => {
 
-        if(err instanceof ValidationError) {
-          return res.status(httpStatus.UNPROCESSABLE_ENTITY).end();
-        } else if(err) {
+        if(err) {
           logger.error('server error users', err);
           return res.status(httpStatus.INTERNAL_SERVER_ERROR).end();
         }
