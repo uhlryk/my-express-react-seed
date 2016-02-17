@@ -11,7 +11,7 @@ var USER_EMAIL = 'test@test.pl';
 var USER_PASSWORD = '123456789';
 var USER_TOKEN;
 var USER_ID;
-describe('Check crud', function() {
+describe('Check authentication crud', function() {
   before(function(done) {
     app = server.run(config, function(response) {
       response.actions.users.create({
