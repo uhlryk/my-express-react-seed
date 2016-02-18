@@ -6,9 +6,13 @@ import itemsDelete from './items/delete';
 import usersCreate from './users/create';
 import usersList from './users/list';
 import usersUpdate from './users/update';
-import usersSendActivationLink from './users/sendActivationLink';
+import passwordUpdate from './users/updatePassword';
+import sendActivationEmail from './users/sendActivationEmail';
+import sendResetPasswordEmail from './users/sendResetPasswordEmail';
 import usersCreateActivationToken from './users/createActivationToken';
+import usersCreateResetPasswordToken from './users/createResetPasswordToken';
 import usersVerifyActivationToken from './users/verifyActivationToken';
+import usersVerifyResetPasswordToken from './users/verifyResetPasswordToken';
 
 import createToken from './authentications/createToken';
 import comparePassword from './authentications/comparePassword';
@@ -26,9 +30,13 @@ export default function(globals){
       create: usersCreate(globals),
       list: usersList(globals),
       update: usersUpdate(globals),
-      sendActivationLink: usersSendActivationLink(globals),
+      passwordUpdate : passwordUpdate(globals),
+      sendActivationEmail: sendActivationEmail(globals),
+      sendResetPasswordEmail: sendResetPasswordEmail(globals),
       createActivationToken: usersCreateActivationToken(globals),
+      createResetPasswordToken: usersCreateResetPasswordToken(globals),
       verifyActivationToken: usersVerifyActivationToken(globals),
+      verifyResetPasswordToken: usersVerifyResetPasswordToken(globals),
     },
     authentications: {
       createToken: createToken(globals),

@@ -31,7 +31,7 @@ router.post('/users', (req, res) => {
       actions.users.createActivationToken({
         id: user.id
       }, (err, tokenResponse) => {
-        actions.users.sendActivationLink({
+        actions.users.sendActivationEmail({
           token: tokenResponse.token,
           targetEmail: user.email
         }, (error, response) => {

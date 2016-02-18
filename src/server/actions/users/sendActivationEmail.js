@@ -10,7 +10,5 @@ export default function (globals) {
     }, (error, response) => {
       callback(error, response);
     });
-
-
   }
 }
