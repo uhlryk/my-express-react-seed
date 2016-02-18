@@ -13,6 +13,9 @@ import serverConfig from '../configs/server';
 import Models from './models/index';
 import EmailSender from './utils/EmailSender';
 import Actions from './actions/index';
+import validationGroups from './validations/groups/index';
+import customValidators from './validations/validators/index';
+import customSanitizers from './validations/sanitizers/index';
 
 export function run(localConfig = {}, callback = null) {
   var config = _.merge({}, serverConfig, localConfig);
@@ -45,12 +48,15 @@ export function run(localConfig = {}, callback = null) {
     emailSender: emailSender
   });
 
-
-
   var app = express();
 
   app.use(bodyParser.json());
-  app.use(expressValidator());
+  app.use(expressValidator({
+    customValidators: customValidators,
+    customSanitizers : customSanitizers
+  }));
+
+  app.use(validationGroups());
   app.set('config', config);
   app.set('models', models);
   app.set('port', config.port);
