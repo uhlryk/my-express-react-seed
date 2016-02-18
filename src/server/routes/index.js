@@ -1,7 +1,7 @@
 import express from 'express';
 
 import items from './items';
-import users from './users';
+import users from './users/index';
 import authentications from './authentications';
 import accounts from './accounts/index';
 
