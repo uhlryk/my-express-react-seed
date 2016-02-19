@@ -10,6 +10,8 @@ import expressValidator from 'express-validator';
 import _ from 'lodash';
 
 import serverConfig from '../configs/server';
+import onNewDb from './hooks/onNewDb';
+import onServerStart from './hooks/onServerStart';
 import Models from './models/index';
 import EmailSender from './utils/EmailSender';
 import Actions from './actions/index';
@@ -109,7 +111,23 @@ export function run(localConfig = {}, callback = null) {
 
   models.sequelize.sync({
     force: config.dropDb
-  }).then(function (){
+  }).then(() => {
+    if(config.dropDb) {
+      return onNewDb({
+        logger: logger,
+        models: models,
+        config: config,
+        actions: actions
+      });
+    }
+  }).then(() => {
+    return onServerStart({
+      logger: logger,
+      models: models,
+      config: config,
+      actions: actions
+    });
+  }).then(() => {
     server.listen(app.get('port'), () => {
       if(callback) {
         callback({
