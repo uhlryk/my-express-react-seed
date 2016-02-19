@@ -3,10 +3,10 @@ import itemsList from './items/list';
 import itemsUpdate from './items/update';
 import itemsDelete from './items/delete';
 
+import hashPassword from './users/hashPassword';
 import usersCreate from './users/create';
 import usersList from './users/list';
 import usersUpdate from './users/update';
-import passwordUpdate from './users/updatePassword';
 import sendActivationEmail from './users/sendActivationEmail';
 import sendResetPasswordEmail from './users/sendResetPasswordEmail';
 import usersCreateActivationToken from './users/createActivationToken';
@@ -27,10 +27,10 @@ export default function(globals){
       delete: itemsDelete(globals)
     },
     users: {
+      hashPassword: hashPassword(globals),
       create: usersCreate(globals),
       list: usersList(globals),
       update: usersUpdate(globals),
-      passwordUpdate : passwordUpdate(globals),
       sendActivationEmail: sendActivationEmail(globals),
       sendResetPasswordEmail: sendResetPasswordEmail(globals),
       createActivationToken: usersCreateActivationToken(globals),

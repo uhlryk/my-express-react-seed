@@ -32,15 +32,20 @@ router.post('/users/resetPassword/confirmation', (req, res) => {
       if(!users || users.length === 0) {
         return res.status(httpStatus.NOT_FOUND).end();
       }
-
-      actions.users.passwordUpdate(users[0], {
-        password: password
-      }, (err, user) => {
-        if(err) {
+      actions.users.hashPassword(password, (err, hashPassword) => {
+        if (err) {
           logger.error('DB erro find reset user password configrmation', err);
           return res.status(httpStatus.INTERNAL_SERVER_ERROR).end();
         }
-        res.status(httpStatus.OK).end();
+        actions.users.update(users[0], {
+          password: hashPassword
+        }, (err, user) => {
+          if (err) {
+            logger.error('DB erro find reset user password configrmation', err);
+            return res.status(httpStatus.INTERNAL_SERVER_ERROR).end();
+          }
+          res.status(httpStatus.OK).end();
+        });
       });
     });
   });

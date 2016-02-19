@@ -14,17 +14,19 @@ var USER_ID;
 describe('Check authentication crud', function() {
   before(function(done) {
     app = server.run(config, function(response) {
-      response.actions.users.create({
-        email: USER_EMAIL,
-        password: USER_PASSWORD,
-        status: response.models.user.STATUS.ACTIVE
-      }, (err, user) => {
-        USER_ID = user.id;
-        response.actions.authentications.createToken({
-          id: USER_ID
-        }, (error, tokenReponse) => {
-          USER_TOKEN = tokenReponse.token;
-          done();
+      response.actions.users.hashPassword(USER_PASSWORD, function(err, hashPassword) {
+        response.actions.users.create({
+          email: USER_EMAIL,
+          password: hashPassword,
+          status: response.models.user.STATUS.ACTIVE
+        }, (err, user) => {
+          USER_ID = user.id;
+          response.actions.authentications.createToken({
+            id: USER_ID
+          }, (error, tokenReponse) => {
+            USER_TOKEN = tokenReponse.token;
+            done();
+          });
         });
       });
     });

@@ -2,8 +2,7 @@ import bcrypt from 'bcrypt';
 import Promise from 'bluebird';
 
 export default function (globals) {
-  return function updatePassword(entity, params, callback) {
-    var password = params.password;
+  return function hashPassword(password, callback) {
 
     var genSalt = Promise.promisify(bcrypt.genSalt);
     var createHash = Promise.promisify(bcrypt.hash);
@@ -11,10 +10,7 @@ export default function (globals) {
     genSalt(10).then((salt) => {
       return createHash(password, salt);
     }).then((hash) => {
-      entity.password = hash;
-      return entity.save();
-    }).then((item) => {
-      callback(null, item);
+      callback(null, hash);
     }).catch((err) => {
       globals.logger.error('DB error users', err);
       callback(err);

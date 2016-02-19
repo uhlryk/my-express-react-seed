@@ -6,17 +6,10 @@ export default function (globals) {
     var email = params.email;
     var password = params.password;
 
-    var genSalt = Promise.promisify(bcrypt.genSalt);
-    var createHash = Promise.promisify(bcrypt.hash);
-
-    genSalt(10).then((salt) => {
-      return createHash(password, salt);
-    }).then((hash) => {
-      return globals.models.user.create({
-        email: email,
-        password: hash,
-        status: params.status
-      });
+    globals.models.user.create({
+      email: email,
+      password: password,
+      status: params.status
     }).then((item) => {
       callback(null, item);
     }).catch((err) => {

@@ -3,6 +3,9 @@ export default function (globals) {
     if(params.status) {
       entity.status = params.status;
     }
+    if(params.password) {
+      entity.password = params.password
+    }
     entity.save().then(() => {
       callback(null, entity);
     }).catch((err) => {

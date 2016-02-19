@@ -18,34 +18,39 @@ router.post('/users', (req, res) => {
   var email = req.body.email;
   var password = req.body.password;
 
-  actions.users.create({
-    email: email,
-    password: password,
-    status: config.enableEmailActivation === true ? models.user.STATUS.INACTIVE : models.user.STATUS.ACTIVE
-  }, (err, user) => {
-    if(err) {
-      logger.error('server error users', err);
+  actions.users.hashPassword(password, (err, hashPassword) => {
+    if (err) {
+      logger.error('DB erro find reset user password configrmation', err);
       return res.status(httpStatus.INTERNAL_SERVER_ERROR).end();
     }
-    if(config.enableEmailActivation) {
-      actions.users.createActivationToken({
-        id: user.id
-      }, (err, tokenResponse) => {
-        actions.users.sendActivationEmail({
-          token: tokenResponse.token,
-          targetEmail: user.email
-        }, (error, response) => {
-          if(error) {
-            logger.error('send activation email error', error);
-          }
-          res.status(httpStatus.OK).end();
+    actions.users.create({
+      email: email,
+      password: hashPassword,
+      status: config.enableEmailActivation === true ? models.user.STATUS.INACTIVE : models.user.STATUS.ACTIVE
+    }, (err, user) => {
+      if (err) {
+        logger.error('server error users', err);
+        return res.status(httpStatus.INTERNAL_SERVER_ERROR).end();
+      }
+      if (config.enableEmailActivation) {
+        actions.users.createActivationToken({
+          id: user.id
+        }, (err, tokenResponse) => {
+          actions.users.sendActivationEmail({
+            token: tokenResponse.token,
+            targetEmail: user.email
+          }, (error, response) => {
+            if (error) {
+              logger.error('send activation email error', error);
+            }
+            res.status(httpStatus.OK).end();
+          });
         });
-      });
-    } else {
-      res.status(httpStatus.OK).end();
-    }
+      } else {
+        res.status(httpStatus.OK).end();
+      }
+    });
   });
-
 });
 
 export default router;
