@@ -74,7 +74,7 @@ export function run(localConfig = {}, callback = null) {
     }
   }));
 
-  app.use(routes);
+  app.use('/api', routes);
 
   var server = http.createServer(app);
 

@@ -31,7 +31,7 @@ describe('Reset user password', function() {
   });
   it('should send email with password (check response status)', function(done){
     request(app)
-      .post('/users/resetPassword')
+      .post('/api/users/resetPassword')
       .send({email : USER_EMAIL})
       .end(function(err, res){
         expect(res.status).to.be.equal(httpStatus.OK);
@@ -43,7 +43,7 @@ describe('Reset user password', function() {
       id: USER_ID
     }, function(err, tokenResponse) {
       request(app)
-        .post('/users/resetPassword/confirmation')
+        .post('/api/users/resetPassword/confirmation')
         .send({token : tokenResponse.token})
         .send({password : USER_NEW_PASSWORD})
         .end(function(err, res){

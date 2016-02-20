@@ -15,7 +15,7 @@ describe('Check crud', function() {
   });
   it('should allow to create item', function(done){
     request(app)
-      .post('/items')
+      .post('/api/items')
       .send({name : 'dummy name'})
       .end(function(err, res){
         expect(res.status).to.be.equal(httpStatus.OK);
@@ -24,7 +24,7 @@ describe('Check crud', function() {
   });
   it('should disallow to create item when no params', function(done){
     request(app)
-      .post('/items')
+      .post('/api/items')
       .end(function(err, res){
         expect(res.status).to.be.equal(httpStatus.UNPROCESSABLE_ENTITY);
         done();
@@ -32,7 +32,7 @@ describe('Check crud', function() {
   });
   it('should show items list', function(done){
     request(app)
-      .get('/items')
+      .get('/api/items')
       .end(function(err, res){
         expect(res.status).to.be.equal(httpStatus.OK);
         done();
@@ -40,7 +40,7 @@ describe('Check crud', function() {
   });
   it('should show single item', function(done){
     request(app)
-      .get('/items/1')
+      .get('/api/items/1')
       .end(function(err, res){
         expect(res.status).to.be.equal(httpStatus.OK);
         done();
@@ -48,7 +48,7 @@ describe('Check crud', function() {
   });
   it('should not find item when wrong id', function(done){
     request(app)
-      .get('/items/100')
+      .get('/api/items/100')
       .end(function(err, res){
         expect(res.status).to.be.equal(httpStatus.NOT_FOUND);
         done();
@@ -56,7 +56,7 @@ describe('Check crud', function() {
   });
   it('should update item', function(done){
     request(app)
-      .put('/items/1')
+      .put('/api/items/1')
       .send({name : 'new dummy name'})
       .end(function(err, res){
         expect(res.status).to.be.equal(httpStatus.OK);
@@ -66,7 +66,7 @@ describe('Check crud', function() {
   });
   it('should not find when tried to update not existing item', function(done){
     request(app)
-      .put('/items/100')
+      .put('/api/items/100')
       .send({name : 'new dummy name'})
       .end(function(err, res){
         expect(res.status).to.be.equal(httpStatus.NOT_FOUND);
@@ -75,7 +75,7 @@ describe('Check crud', function() {
   });
   it('should delete item', function(done){
     request(app)
-      .delete('/items/1')
+      .delete('/api/items/1')
       .end(function(err, res){
         expect(res.status).to.be.equal(httpStatus.OK);
         done();
@@ -83,7 +83,7 @@ describe('Check crud', function() {
   });
   it('should not find when tried to delete not existing item', function(done){
     request(app)
-      .delete('/items/1')
+      .delete('/api/items/1')
       .end(function(err, res){
         expect(res.status).to.be.equal(httpStatus.NOT_FOUND);
         done();

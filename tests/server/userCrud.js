@@ -33,7 +33,7 @@ describe('Check authentication crud', function() {
   });
   it('should allow to create item', function(done){
     request(app)
-      .post('/accounts/items')
+      .post('/api/accounts/items')
       .set('access-token', USER_TOKEN)
       .send({name : 'dummy name'})
       .end(function(err, res){
@@ -43,7 +43,7 @@ describe('Check authentication crud', function() {
   });
   it('should disallow to create item when no token', function(done){
     request(app)
-      .post('/accounts/items')
+      .post('/api/accounts/items')
       .send({name : 'dummy name'})
       .end(function(err, res){
         expect(res.status).to.be.equal(httpStatus.UNAUTHORIZED);
@@ -52,7 +52,7 @@ describe('Check authentication crud', function() {
   });
   it('should show items list', function(done){
     request(app)
-      .get('/accounts/items')
+      .get('/api/accounts/items')
       .set('access-token', USER_TOKEN)
       .end(function(err, res){
         expect(res.status).to.be.equal(httpStatus.OK);
@@ -61,7 +61,7 @@ describe('Check authentication crud', function() {
   });
   it('should disallow show items list when no token', function(done){
     request(app)
-      .get('/accounts/items')
+      .get('/api/accounts/items')
       .end(function(err, res){
         expect(res.status).to.be.equal(httpStatus.UNAUTHORIZED);
         done();
@@ -69,7 +69,7 @@ describe('Check authentication crud', function() {
   });
   it('should show single item', function(done){
     request(app)
-      .get('/accounts/items/1')
+      .get('/api/accounts/items/1')
       .set('access-token', USER_TOKEN)
       .end(function(err, res){
         expect(res.status).to.be.equal(httpStatus.OK);
@@ -78,7 +78,7 @@ describe('Check authentication crud', function() {
   });
   it('should disallow  show single item when no token', function(done){
     request(app)
-      .get('/accounts/items/1')
+      .get('/api/accounts/items/1')
       .end(function(err, res){
         expect(res.status).to.be.equal(httpStatus.UNAUTHORIZED);
         done();
@@ -86,7 +86,7 @@ describe('Check authentication crud', function() {
   });
   it('should update item', function(done){
     request(app)
-      .put('/accounts/items/1')
+      .put('/api/accounts/items/1')
       .set('access-token', USER_TOKEN)
       .send({name : 'new dummy name'})
       .end(function(err, res){
@@ -97,7 +97,7 @@ describe('Check authentication crud', function() {
   });
   it('should disallow update item when no token', function(done){
     request(app)
-      .put('/accounts/items/1')
+      .put('/api/accounts/items/1')
       .send({name : 'new dummy name'})
       .end(function(err, res){
         expect(res.status).to.be.equal(httpStatus.UNAUTHORIZED);
@@ -106,7 +106,7 @@ describe('Check authentication crud', function() {
   });
   it('should delete item', function(done){
     request(app)
-      .delete('/accounts/items/1')
+      .delete('/api/accounts/items/1')
       .set('access-token', USER_TOKEN)
       .end(function(err, res){
         expect(res.status).to.be.equal(httpStatus.OK);
@@ -115,7 +115,7 @@ describe('Check authentication crud', function() {
   });
   it('should disallow delete item when no token', function(done){
     request(app)
-      .delete('/accounts/items/1')
+      .delete('/api/accounts/items/1')
       .end(function(err, res){
         expect(res.status).to.be.equal(httpStatus.UNAUTHORIZED);
         done();

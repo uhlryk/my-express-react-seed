@@ -21,7 +21,7 @@ describe('Activation user', function() {
   });
   it('should allow to create inactive user', function(done){
     request(app)
-      .post('/users')
+      .post('/api/users')
       .send({email : USER_EMAIL})
       .send({password : 'somePassword'})
       .end(function(err, res){
@@ -39,7 +39,7 @@ describe('Activation user', function() {
       id: USER_ID
     }, function(err, tokenResponse) {
       request(app)
-        .post('/users/activate')
+        .post('/api/users/activate')
         .send({token : tokenResponse.token})
         .end(function(err, res){
           expect(res.status).to.be.equal(httpStatus.OK);

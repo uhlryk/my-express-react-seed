@@ -15,7 +15,7 @@ describe('Check user', function() {
   });
   it('should allow to create user', function(done){
     request(app)
-      .post('/users')
+      .post('/api/users')
       .send({email : 'test1@test.test'})
       .send({password : 'somePassword'})
       .end(function(err, res){
@@ -25,7 +25,7 @@ describe('Check user', function() {
   });
   it('should disallow to create item when no params', function(done){
     request(app)
-      .post('/items')
+      .post('/api/items')
       .end(function(err, res){
         expect(res.status).to.be.equal(httpStatus.UNPROCESSABLE_ENTITY);
         done();
@@ -34,7 +34,7 @@ describe('Check user', function() {
   var token;
   it('should authenticate user', function(done) {
     request(app)
-      .post('/authentications')
+      .post('/api/authentications')
       .send({email : 'test1@test.test'})
       .send({password : 'somePassword'})
       .end(function(err, res){
@@ -46,7 +46,7 @@ describe('Check user', function() {
   });
   it('should verify user', function(done) {
     request(app)
-      .get('/accounts')
+      .get('/api/accounts')
       .set('access-token', token)
       .end(function(err, res){
         expect(res.status).to.be.equal(httpStatus.OK);
@@ -55,7 +55,7 @@ describe('Check user', function() {
   });
   it('should not verify user when password incorrect', function(done) {
     request(app)
-      .get('/accounts')
+      .get('/api/accounts')
       .set('access-token', 'aaaaaaaaaaaa')
       .end(function(err, res){
         expect(res.status).to.be.equal(httpStatus.UNAUTHORIZED);

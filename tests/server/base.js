@@ -14,7 +14,7 @@ describe("Check server ", function() {
   });
   it("should return status code 200 at empty get", function(done) {
     request(app)
-    .get('/')
+    .get('/api/')
     .expect(200)
     .end(function(err, res) {
       done();
