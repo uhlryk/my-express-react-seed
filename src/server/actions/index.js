@@ -19,29 +19,30 @@ import comparePassword from './authentications/comparePassword';
 import verifyToken from './authentications/verifyToken';
 
 export default function(globals){
-  return {
-    items: {
-      create: itemsCreate(globals),
-      list: itemsList(globals),
-      update: itemsUpdate(globals),
-      delete: itemsDelete(globals)
-    },
-    users: {
-      hashPassword: hashPassword(globals),
-      create: usersCreate(globals),
-      list: usersList(globals),
-      update: usersUpdate(globals),
-      sendActivationEmail: sendActivationEmail(globals),
-      sendResetPasswordEmail: sendResetPasswordEmail(globals),
-      createActivationToken: usersCreateActivationToken(globals),
-      createResetPasswordToken: usersCreateResetPasswordToken(globals),
-      verifyActivationToken: usersVerifyActivationToken(globals),
-      verifyResetPasswordToken: usersVerifyResetPasswordToken(globals),
-    },
-    authentications: {
-      createToken: createToken(globals),
-      comparePassword: comparePassword(globals),
-      verifyToken: verifyToken(globals)
-    }
-  }
+  var actions = {};
+  globals = Object.assign(globals, { actions })
+  actions.items = {
+    create: itemsCreate(globals),
+    list: itemsList(globals),
+    update: itemsUpdate(globals),
+    delete: itemsDelete(globals)
+  };
+  actions.users = {
+    hashPassword: hashPassword(globals),
+    create: usersCreate(globals),
+    list: usersList(globals),
+    update: usersUpdate(globals),
+    sendActivationEmail: sendActivationEmail(globals),
+    sendResetPasswordEmail: sendResetPasswordEmail(globals),
+    createActivationToken: usersCreateActivationToken(globals),
+    createResetPasswordToken: usersCreateResetPasswordToken(globals),
+    verifyActivationToken: usersVerifyActivationToken(globals),
+    verifyResetPasswordToken: usersVerifyResetPasswordToken(globals),
+  };
+  actions.authentications = {
+    createToken: createToken(globals),
+    comparePassword: comparePassword(globals),
+    verifyToken: verifyToken(globals)
+  };
+  return actions;
 }
