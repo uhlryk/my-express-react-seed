@@ -8,9 +8,7 @@ export default function (globals) {
       if (err) {
         return callback(err);
       }
-      callback(null, {
-        id: decoded.id
-      });
+      callback(null, decoded);
     });
   }
 }

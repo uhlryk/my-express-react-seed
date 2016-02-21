@@ -1,12 +1,10 @@
 export default function (globals) {
-  return function createItem(params, callback) {
+  return function createEntity(inserObject, callback) {
 
-    globals.models.item.create({
-      name: params.name
-    }).then((item) => {
-      callback(null, item);
+    globals.models.item.create(inserObject).then((entity) => {
+      callback(null, entity);
     }).catch((err) => {
-      globals.logger.error('DB error items', err);
+      globals.logger.error('DB error entities', err);
       callback(err);
     });
   }

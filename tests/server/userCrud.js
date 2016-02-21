@@ -24,7 +24,7 @@ describe('Check authentication crud', function() {
           response.actions.authentications.createToken({
             id: USER_ID
           }, (error, tokenReponse) => {
-            USER_TOKEN = tokenReponse.token;
+            USER_TOKEN = tokenReponse;
             done();
           });
         });

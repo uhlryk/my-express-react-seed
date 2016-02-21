@@ -16,13 +16,12 @@ router.post('/users/activate', (req, res) => {
     }
     actions.users.list({
       id: response.id,
-      status: models.user.STATUS.INACTIVE
     }, (err, users) => {
       if(err) {
         logger.error('DB error find activation user', err);
         return res.status(httpStatus.INTERNAL_SERVER_ERROR).end();
       }
-      if(!users || users.length === 0) {
+      if(!users || users.length === 0 || users[0].status !== models.user.STATUS.INACTIVE) {
         return res.status(httpStatus.NOT_FOUND).end();
       }
 

@@ -18,8 +18,10 @@ router.post('/authentications/', function(req, res, next){
   var password = req.body.password;
 
   actions.users.list({
-    email: email,
-    status: models.user.STATUS.ACTIVE
+    where: {
+      email: email,
+      status: models.user.STATUS.ACTIVE
+    }
   }, (err, users) => {
     if(err) {
       logger.error('server error users', err);
@@ -34,7 +36,7 @@ router.post('/authentications/', function(req, res, next){
           id: users[0].id
         }, (error, tokenReponse) => {
           res.status(httpStatus.OK).json({
-            token: tokenReponse.token
+            token: tokenReponse
           });
         });
       } else { //wrong password

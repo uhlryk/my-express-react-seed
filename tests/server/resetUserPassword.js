@@ -44,7 +44,7 @@ describe('Reset user password', function() {
     }, function(err, tokenResponse) {
       request(app)
         .post('/api/users/resetPassword/confirmation')
-        .send({token : tokenResponse.token})
+        .send({token : tokenResponse})
         .send({password : USER_NEW_PASSWORD})
         .end(function(err, res){
           expect(res.status).to.be.equal(httpStatus.OK);

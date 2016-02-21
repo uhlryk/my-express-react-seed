@@ -26,7 +26,9 @@ describe('Activation user', function() {
       .send({password : 'somePassword'})
       .end(function(err, res){
         serverResponse.actions.users.list({
-          email: USER_EMAIL
+          where: {
+            email: USER_EMAIL
+          }
         }, function(err, users) {
           expect(users[0]).to.include.property('status', serverResponse.models.user.STATUS.INACTIVE);
           USER_ID = users[0].id;
@@ -40,11 +42,13 @@ describe('Activation user', function() {
     }, function(err, tokenResponse) {
       request(app)
         .post('/api/users/activate')
-        .send({token : tokenResponse.token})
+        .send({token : tokenResponse})
         .end(function(err, res){
           expect(res.status).to.be.equal(httpStatus.OK);
           serverResponse.actions.users.list({
-            email: USER_EMAIL
+            where: {
+              email: USER_EMAIL
+            }
           }, function(err, users) {
             expect(users[0]).to.include.property('status', serverResponse.models.user.STATUS.ACTIVE);
             done();

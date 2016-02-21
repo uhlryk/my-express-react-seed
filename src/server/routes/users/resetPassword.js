@@ -17,8 +17,10 @@ router.post('/users/resetPassword', (req, res) => {
   var email = req.body.email;
 
   actions.users.list({
-    email: email,
-    status: models.user.STATUS.ACTIVE
+    where: {
+      email: email,
+      status: models.user.STATUS.ACTIVE
+    }
   }, (err, users) => {
     if(err) {
       logger.error('DB error find reset user password configrmation', err);
@@ -31,7 +33,7 @@ router.post('/users/resetPassword', (req, res) => {
       id: users[0].id
     }, (err, tokenResponse) => {
       actions.users.sendResetPasswordEmail({
-        token: tokenResponse.token,
+        token: tokenResponse,
         targetEmail: users[0].email
       }, (error, response) => {
         if(error) {

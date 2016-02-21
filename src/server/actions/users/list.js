@@ -1,29 +1,32 @@
 export default function (globals) {
-  return function listUsers(params, callback) {
+  return function listEntities(params, callback) {
     var id = params.id;
-    var email = params.email;
-    var limit = params.limit;
-    var status = params.status;
-
+    var limit = params.limit || 20;
+    var page = params.page || 1;
     var options = {
       where: {}
     };
-    if(status) {
-      options.where.status = status;
-    }
     options.limit = limit;
+    options.offset = page * limit - limit;
 
     if(id) {
       options.where.id = id;
-    }
-    if(email) {
-      options.where.email = email;
+    } else if(params.where) {
+      options.where = params.where;
     }
 
-    globals.models.user.findAll(options).then((users) => {
-      callback(null, users);
+    if(params.attributes) {
+
+    }
+
+    if(params.orderColumn) {
+      options.order = [[params.orderColumn, params.orderType || 'DESC']];
+    }
+
+    globals.models.user.findAll(options).then((entites) => {
+      callback(null, entites);
     }).catch((err) => {
       callback(err)
-    });
+    });;
   }
 }

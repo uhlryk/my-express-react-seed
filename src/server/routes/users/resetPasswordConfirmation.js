@@ -22,14 +22,13 @@ router.post('/users/resetPassword/confirmation', (req, res) => {
       return res.status(httpStatus.INTERNAL_SERVER_ERROR).end();
     }
     actions.users.list({
-      id: response.id,
-      status: models.user.STATUS.ACTIVE
+      id: response.id
     }, (err, users) => {
       if(err) {
         logger.error('DB error find reset user password configrmation', err);
         return res.status(httpStatus.INTERNAL_SERVER_ERROR).end();
       }
-      if(!users || users.length === 0) {
+      if(!users || users.length === 0 || users[0].status !== models.user.STATUS.ACTIVE) {
         return res.status(httpStatus.NOT_FOUND).end();
       }
       actions.users.hashPassword(password, (err, hashPassword) => {

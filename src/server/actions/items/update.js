@@ -1,12 +1,10 @@
 export default function (globals) {
-  return function updateItem(entity, params, callback) {
-    var name = params.name;
+  return function updateEntity(entity, updateObject, callback) {
 
-    entity.name = name;
-    entity.save().then(() => {
+    entity.update(updateObject).then(() => {
       callback(null, entity);
     }).catch((err) => {
-      globals.logger.error('DB error items', err);
+      globals.logger.error('DB error entities', err);
       callback(err);
     });
   }
