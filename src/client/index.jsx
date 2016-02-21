@@ -5,18 +5,17 @@ import style from './sass/style.scss';
 import createStore from './stores/index.js';
 import reducer from './reducers/index.js';
 import App from './components/App.jsx';
-import Home from './components/Home.jsx';
-import { Router, Route, createMemoryHistory } from 'react-router';
-
-const history = createMemoryHistory('/');
+import Home from './components/pages/Home.jsx';
+import NotFound from './components/pages/NotFound.jsx';
+import { Router, Route, browserHistory } from 'react-router';
 
 var store = createStore(reducer);
-
 render(
   <Provider store={store}>
-    <Router history={history}>
+    <Router history={browserHistory}>
       <Route component={App}>
         <Route path="/" component={Home}/>
+        <Route path="*" component={NotFound}/>
       </Route>
     </Router>
   </Provider>,

@@ -27,7 +27,7 @@ module.exports = {
     loaders: [
       {
         test: /.jsx?$/,
-        loaders: ['babel?presets[]=react,presets[]=es2015,presets[]=stage-0'],
+        loaders: ['babel?presets[]=react,presets[]=es2015,presets[]=stage-0,plugins[]=transform-decorators-legacy'],
         include: path.join(__dirname, 'src/client'),
         exclude: /node_modules/
       },
