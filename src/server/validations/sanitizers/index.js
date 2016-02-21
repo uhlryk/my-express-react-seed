@@ -1,9 +1,9 @@
+import listLimit from './listLimit';
+import listPage from './listPage';
 /**
  *  list of express-validator https://github.com/ctavan/express-validator custom sanitizers
  */
 export default {
-  //someSanitizer:  function(value) {
-  //  var newValue = value;
-  //  return newValue;
-  //},
+  listLimit: listLimit,
+  listPage: listPage
 };

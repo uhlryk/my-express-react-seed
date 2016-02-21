@@ -6,7 +6,15 @@ let router = new express.Router();
 router.get('/items', (req, res) => {
   var logger = req.app.get('logger');
   var actions = req.app.get('actions');
+
+  req.sanitizeQuery('limit').listLimit({values:[10,20,30,40,50]});
+  req.sanitizeQuery('page').listPage();
+
   actions.items.list({
+    limit: req.query.limit,
+    page: req.query.page,
+    orderColumn: req.orderColumn,
+    orderType: req.orderType
   }, (err, items) => {
     if(err) {
       logger.error('DB error item', err);
