@@ -4,17 +4,18 @@ var expect = chai.expect;
 var request = require('supertest');
 var config = require('../../src/configs/server-test.local');
 config = JSON.parse(JSON.stringify(config));
-var httpStatus = require('http-status-codes');
+config.enableEmailActivation = true;
 
-var server = require('../../dist/server.js');
+var httpStatus = require('http-status-codes');
+var Server = require('../../dist/server.js');
+var server = Server.config(config);
 var app;
 var serverResponse;
 var USER_EMAIL = 'test1@test.test';
 var USER_ID;
 describe('Activation user', function() {
   before(function(done) {
-    config.enableEmailActivation = true;
-    app = server.run(config, function(response) {
+    app = server.listen(function(response) {
       serverResponse = response;
       done();
     });
@@ -30,6 +31,8 @@ describe('Activation user', function() {
             email: USER_EMAIL
           }
         }, function(err, users) {
+          console.log(err);
+          console.log(users);
           expect(users[0]).to.include.property('status', serverResponse.models.user.STATUS.INACTIVE);
           USER_ID = users[0].id;
           done();

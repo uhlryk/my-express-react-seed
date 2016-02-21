@@ -5,66 +5,8 @@ var webpack = require('webpack');
 var path = require('path');
 var nodemon= require('nodemon');
 var shell = require('gulp-shell')
-
-var node_modules = {};
-fs.readdirSync('node_modules')
-  .forEach(function(mod) {
-    node_modules[mod] = 'commonjs ' + mod;
-  });
-
-var serverWebpackOptions = {
-  module: {
-    loaders: [
-      {
-        test: /.js$/,
-        loaders: ['babel?presets[]=es2015,presets[]=stage-0'],
-        include: path.join(__dirname, 'src/server'),
-        exclude: /node_modules/
-      },
-      {
-        test: /\.json$/,
-        loader: 'json-loader'
-      },
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: 'eslint-loader'
-      }
-    ]
-  },
-  entry: [
-    './src/server/server.js'
-  ],
-  plugins: [
-    new webpack.BannerPlugin('require("source-map-support").install();',
-      { raw: true, entryOnly: false })
-  ],
-  output: {
-    libraryTarget: "commonjs",
-    path: path.join(__dirname, './dist/'),
-    filename: 'server.js'
-  },
-  target: 'node',
-  eslint: {
-
-  },
-  node: {
-    __filename: true,
-    __dirname: true
-  },
-  resolve: {},
-  externals: node_modules,
-  debug: true,
-  progress: false,
-  emitError: true,
-  emitWarning: true,
-  failOnError: true,
-  stats: {
-    colors: true,
-    reasons: true
-  },
-  devtool: 'source-map'
-};
+var serverConfig = require('./webpack.config.server');
+var clientProdConfig = require('./webpack.config.client.prod');
 
 function onBuild(done) {
   return function(err, stats) {
@@ -81,12 +23,45 @@ function onBuild(done) {
   }
 }
 
-gulp.task('compile-dev-server', function(done) {
-  webpack(serverWebpackOptions).run(onBuild(done));
+gulp.task('copy-sever-layout', function() {
+  return gulp.src(['./src/server/emailTemplates/**/*'])
+    .pipe(gulp.dest('./dist/emailTemplates'))
 });
-gulp.task('watch-dev-server', function() {
+
+gulp.task('copy-client-layout', function() {
+  return gulp.src(['./src/client/index.html'])
+    .pipe(gulp.dest('./dist/client'))
+});
+/**
+ * compile ES6 client files
+ */
+gulp.task('compile-client', ['copy-client-layout'], function(done) {
+  webpack(clientProdConfig, function(err, stats) {
+    if(err) console.log(err);
+    gutil.log("[webpack]", stats.toString({}));
+    done();
+  });
+});
+
+/**
+ * compile ES6 server files
+ */
+gulp.task('compile-server', ['copy-sever-layout'], function(done) {
+  webpack(serverConfig).run(onBuild(done));
+});
+
+/**
+ * compile production ES6 server and client  files
+ */
+gulp.task('compile-production', ['compile-client', 'compile-server']);
+
+
+/**
+ * development compile dev server which also run client dev
+ */
+gulp.task('watch-dev-server', ['copy-client-layout', 'copy-sever-layout'], function() {
   var firstStart = false;
-  webpack(serverWebpackOptions).watch(100, function(err, stats) {
+  webpack(serverConfig).watch(100, function(err, stats) {
     onBuild()(err, stats);
     if(firstStart === true) {
       nodemon.restart();
@@ -94,7 +69,9 @@ gulp.task('watch-dev-server', function() {
     firstStart = true;
   });
 });
-
+/**
+ * compile ES6 server files watch on changes and run server
+ */
 gulp.task('run-dev-server', ['watch-dev-server'], function() {
   nodemon({
     execMap: {
@@ -109,9 +86,31 @@ gulp.task('run-dev-server', ['watch-dev-server'], function() {
   });
 });
 
-gulp.task('test-server', ['compile-dev-server'], shell.task([
+gulp.task('run-dev-client', function() {
+  nodemon({
+    execMap: {
+      js: 'node'
+    },
+    script: path.join(__dirname, 'devServer'),
+    ignore: ['*'],
+    watch: ['dist/'],
+    ext: 'noop'
+  }).on('restart', function() {
+    console.log('Restarted!');
+  });
+});
+
+/**
+ * compile server and run tests
+ */
+gulp.task('test-server', ['compile-server'], shell.task([
   './node_modules/.bin/mocha  --check-leaks --timeout 3000 tests/server'
 ]));
 gulp.task('coverage-test-server', ['compile-dev-server'], shell.task([
   './node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha tests/server --print both --recursive'
 ]));
+
+
+
+
+

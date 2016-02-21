@@ -19,11 +19,9 @@ import validationGroups from './validations/groups/index';
 import customValidators from './validations/validators/index';
 import customSanitizers from './validations/sanitizers/index';
 
-export function run(localConfig = {}, callback = null) {
+export function config(localConfig = {}, callbacks = {}) {
   var config = _.merge({}, serverConfig, localConfig);
   var logger = new Logger();
-
-  var serverRootPath = __dirname;
 
   var models = Models({
     name: config.db.name,
@@ -40,7 +38,7 @@ export function run(localConfig = {}, callback = null) {
   var emailSender = EmailSender({
     logger: logger,
     config: config,
-    templateDir: path.join(serverRootPath, 'emailTemplates')
+    templateDir: path.join(__dirname, 'emailTemplates')
   });
 
   var actions = Actions({
@@ -76,6 +74,15 @@ export function run(localConfig = {}, callback = null) {
 
   app.use('/api', routes);
 
+  if(callbacks.onBeforeClientMiddleware) {
+    callbacks.onBeforeClientMiddleware(app);
+  }
+
+  app.use('/static',express.static(path.join(__dirname, 'client')));
+  app.use('/*', function(req, res){
+    res.sendFile(path.join(__dirname + '/client/index.html'));
+  });
+
   var server = http.createServer(app);
 
   app.use(function(err, req, res, next){
@@ -103,40 +110,45 @@ export function run(localConfig = {}, callback = null) {
   });
 
   server.on('listening', () => {
-    logger.info('Listening on ' + app.get('port'));
+    logger.info('Listening on A' + app.get('port'));
   });
   server.on('close', () => {
     logger.info('Server Stopped');
   });
 
-  models.sequelize.sync({
-    force: config.dropDb
-  }).then(() => {
-    if(config.dropDb) {
-      return onNewDb({
-        logger: logger,
-        models: models,
-        config: config,
-        actions: actions
-      });
-    }
-  }).then(() => {
-    return onServerStart({
-      logger: logger,
-      models: models,
-      config: config,
-      actions: actions
-    });
-  }).then(() => {
-    server.listen(app.get('port'), () => {
-      if(callback) {
-        callback({
-          actions: actions,
-          models: models
-        });
-      }
-    });
-  });
 
-  return server;
+
+  return {
+    listen: (callback = null) => {
+      models.sequelize.sync({
+        force: config.dropDb
+      }).then(() => {
+        if(config.dropDb) {
+          return onNewDb({
+            logger: logger,
+            models: models,
+            config: config,
+            actions: actions
+          });
+        }
+      }).then(() => {
+        return onServerStart({
+          logger: logger,
+          models: models,
+          config: config,
+          actions: actions
+        });
+      }).then(() => {
+        server.listen(app.get('port'), () => {
+          if(callback) {
+            callback({
+              actions: actions,
+              models: models
+            });
+          }
+        });
+      });
+      return server;
+    },
+  };
 };

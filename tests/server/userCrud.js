@@ -5,7 +5,8 @@ var request = require('supertest');
 var config = require('../../src/configs/server-test.local');
 var httpStatus = require('http-status-codes');
 
-var server = require('../../dist/server.js');
+var Server = require('../../dist/server.js');
+var server = Server.config(config);
 var app;
 var USER_EMAIL = 'test@test.pl';
 var USER_PASSWORD = '123456789';
@@ -13,7 +14,7 @@ var USER_TOKEN;
 var USER_ID;
 describe('Check authentication crud', function() {
   before(function(done) {
-    app = server.run(config, function(response) {
+    app = server.listen(function(response) {
       response.actions.users.hashPassword(USER_PASSWORD, function(err, hashPassword) {
         response.actions.users.create({
           email: USER_EMAIL,

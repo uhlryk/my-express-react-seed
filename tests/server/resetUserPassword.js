@@ -6,7 +6,8 @@ var config = require('../../src/configs/server-test.local');
 config = JSON.parse(JSON.stringify(config));
 var httpStatus = require('http-status-codes');
 
-var server = require('../../dist/server.js');
+var Server = require('../../dist/server.js');
+var server = Server.config(config);
 var app;
 var serverResponse;
 var USER_EMAIL = 'test@test.pl';
@@ -15,7 +16,7 @@ var USER_NEW_PASSWORD = 'fdsdfsdfsdfs';
 var USER_ID;
 describe('Reset user password', function() {
   before(function(done) {
-    app = server.run(config, function(response) {
+    app = server.listen(function(response) {
       serverResponse = response;
       response.actions.users.hashPassword(USER_PASSWORD, function(err, hashPassword) {
         response.actions.users.create({

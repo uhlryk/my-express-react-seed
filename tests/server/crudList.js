@@ -6,11 +6,12 @@ var config = require('../../src/configs/server-test.local');
 var httpStatus = require('http-status-codes');
 var Promise = require('bluebird');
 
-var server = require('../../dist/server.js');
+var Server = require('../../dist/server.js');
+var server = Server.config(config);
 var app;
 describe('Check crud', function() {
   before(function(done) {
-    app = server.run(config, function(response) {
+    app = server.listen(function(response) {
       /**
        * generate 30 items
        */

@@ -1,4 +1,4 @@
 var config = require('./src/configs/server.local');
-var server = require('./dist/server');
-
-server.run(config, function(){});
+var Server = require('./dist/server');
+var server = Server.config(config);
+server.listen(function(){});
