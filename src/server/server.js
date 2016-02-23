@@ -50,6 +50,18 @@ export function config(localConfig = {}, callbacks = {}) {
 
   var app = express();
 
+  app.use(function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Cache-Control, Pragma, Origin, Authorization, Content-Type, X-Requested-With');
+    res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
+    if ('OPTIONS' === req.method) {
+      res.status(204).send();
+    }
+    else {
+      next();
+    }
+  });
+
   app.use(bodyParser.json());
   app.use(expressValidator({
     customValidators: customValidators,
@@ -110,7 +122,7 @@ export function config(localConfig = {}, callbacks = {}) {
   });
 
   server.on('listening', () => {
-    logger.info('Listening on A' + app.get('port'));
+    logger.info('Listening on ' + app.get('port'));
   });
   server.on('close', () => {
     logger.info('Server Stopped');
