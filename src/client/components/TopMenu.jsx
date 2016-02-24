@@ -15,15 +15,20 @@ class TopMenu extends React.Component {
   constructor(props) {
     super(props);
     this.onGoToHomePage = this.onGoToHomePage.bind(this);
-    this.onGoToListPage = this.onGoToListPage.bind(this);
+    this.onGoToListItemPage = this.onGoToListItemPage.bind(this);
+    this.onGoToCreateItemPage = this.onGoToCreateItemPage.bind(this);
   }
 
   onGoToHomePage() {
     this.context.router.push('/');
   }
 
-  onGoToListPage() {
-    this.context.router.push('/list');
+  onGoToListItemPage() {
+    this.context.router.push('/list-item');
+  }
+
+  onGoToCreateItemPage() {
+    this.context.router.push('/create-item');
   }
 
   render() {
@@ -36,7 +41,8 @@ class TopMenu extends React.Component {
         <RB.Navbar.Collapse>
           <RB.Nav>
             <RB.NavItem eventKey={1} onClick={this.onGoToHomePage}>Home</RB.NavItem>
-            <RB.NavItem eventKey={2} onClick={this.onGoToListPage} >List Item</RB.NavItem>
+            <RB.NavItem eventKey={2} onClick={this.onGoToListItemPage} >List Item</RB.NavItem>
+            <RB.NavItem eventKey={3} onClick={this.onGoToCreateItemPage} >Create Item</RB.NavItem>
           </RB.Nav>
         </RB.Navbar.Collapse>
       </RB.Navbar>
