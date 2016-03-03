@@ -26,10 +26,13 @@ class List extends React.Component {
 
   handleSubmit(evt) {
     evt.preventDefault();
-    this.context.request.postRequest('http://localhost:3000/api/items', {
-      name: this.state.name
-    }, {},(err, res)=>{
-      this.context.router.push('/list-item');
+    this.context.request.postRequest({
+      url: 'http://localhost:3000/api/items',
+      body: {
+        name: this.state.name
+      }, endCallback: (err, res)=> {
+        this.context.router.push('/list-item');
+      }
     });
   }
 

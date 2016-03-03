@@ -31,8 +31,6 @@ describe('Activation user', function() {
             email: USER_EMAIL
           }
         }, function(err, users) {
-          console.log(err);
-          console.log(users);
           expect(users[0]).to.include.property('status', serverResponse.models.user.STATUS.INACTIVE);
           USER_ID = users[0].id;
           done();

@@ -15,15 +15,18 @@ class List extends React.Component {
   }
 
   componentWillMount() {
-    this.context.request.getRequest('http://localhost:3000/api/items', {}, (err, res)=>{
-      var list = [];
-      if(res.body && res.body.length > 0) {
-        list = res.body;
+    this.context.request.getRequest({
+      url: 'http://localhost:3000/api/items',
+      endCallback: (err, res)=> {
+        var list = [];
+        if (res.body && res.body.length > 0) {
+          list = res.body;
+        }
+        this.setState({
+          loading: false,
+          list
+        });
       }
-      this.setState({
-        loading: false,
-        list
-      });
     });
   }
 
