@@ -30,7 +30,7 @@ class List extends React.Component {
       url: 'http://localhost:3000/api/items',
       body: {
         name: this.state.name
-      }, endCallback: (err, res)=> {
+      }, endCallback: (err, req, res)=> {
         this.context.router.push('/list-item');
       }
     });

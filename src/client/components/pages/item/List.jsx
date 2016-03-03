@@ -17,7 +17,7 @@ class List extends React.Component {
   componentWillMount() {
     this.context.request.getRequest({
       url: 'http://localhost:3000/api/items',
-      endCallback: (err, res)=> {
+      endCallback: (err, req, res)=> {
         var list = [];
         if (res.body && res.body.length > 0) {
           list = res.body;
