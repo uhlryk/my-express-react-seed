@@ -1,6 +1,6 @@
 import React from 'react';
 import * as RB from 'react-bootstrap';
-class List extends React.Component {
+class Detail extends React.Component {
 
   static contextTypes = {
     request: React.PropTypes.object.isRequired,
@@ -10,22 +10,23 @@ class List extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      list: [],
+      id: this.props.params.id,
+      details: {},
       loading: true
     };
   }
 
   componentWillMount() {
     this.context.request.getRequest({
-      url: 'http://localhost:3000/api/items',
+      url: 'http://localhost:3000/api/items/' + this.state.id,
       endCallback: (err, req, res)=> {
-        var list = [];
-        if (res.body && res.body.length > 0) {
-          list = res.body;
+        var details = {};
+        if (res.body ) {
+          details = res.body;
         }
         this.setState({
           loading: false,
-          list
+          details
         });
       }
     });
@@ -39,27 +40,22 @@ class List extends React.Component {
     );
   }
 
-  renderEmptyList() {
+  renderEmptyDetails() {
     return (
       <div className="row">
         <h2>Empty List</h2>
       </div>
     );
   }
-  actionView(id) {
-    this.context.router.push('/detail-item/' + id);
-  }
 
-  renderList() {
+  renderDetails() {
     var list = [];
-    this.state.list.forEach((elem) => {
+    Object.keys(this.state.details).forEach((key) => {
       list.push(
-        <tr key={elem.id}>
-          <td>{elem.id}</td>
-          <td>{elem.name}</td>
-          <td>{elem.createdAt}</td>
-          <td>{elem.updatedAt}</td>
-          <td><RB.Button bsStyle="primary" onClick={this.actionView.bind(this, elem.id)}>View</RB.Button></td>
+        <tr key={key}>
+          <td>{key}</td>
+          <td>{this.state.details[key]}</td>
+          <td></td>
         </tr>
       );
     });
@@ -67,13 +63,10 @@ class List extends React.Component {
       <div className="row">
         <table className="table table-striped table-hover">
           <thead>
-            <tr>
-              <th>ID</th>
-              <th>name</th>
-              <th>created</th>
-              <th>edited</th>
-              <th>actions</th>
-            </tr>
+          <tr>
+            <th>key</th>
+            <th>value</th>
+          </tr>
           </thead>
           <tbody>
           {list}
@@ -86,12 +79,12 @@ class List extends React.Component {
   render() {
     if(this.state.loading) {
       return this.renderLoading();
-    } else if(this.state.list.length === 0) {
-      return this.renderEmptyList();
-    } else if(this.state.list.length > 0) {
-      return this.renderList();
+    } else if(Object.keys(this.state.details).length === 0) {
+      return this.renderEmptyDetails();
+    } else if(Object.keys(this.state.details).length > 0) {
+      return this.renderDetails();
     }
   }
 }
 
-export default List;
+export default Detail;

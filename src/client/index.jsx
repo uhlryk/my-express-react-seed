@@ -9,6 +9,7 @@ import App from './components/App.jsx';
 import Home from './components/pages/Home.jsx';
 import NotFound from './components/pages/NotFound.jsx';
 import ListItem from './components/pages/item/List.jsx';
+import DetailItem from './components/pages/item/Detail.jsx';
 import CreateItem from './components/pages/item/Create.jsx';
 import { Router, Route, browserHistory } from 'react-router';
 
@@ -24,6 +25,7 @@ render(
         <Route component={App}>
           <Route path="/" component={Home}/>
           <Route path="/list-item" component={ListItem}/>
+          <Route path="/detail-item/:id" component={DetailItem}/>
           <Route path="/create-item" component={CreateItem}/>
           <Route path="*" component={NotFound}/>
         </Route>
