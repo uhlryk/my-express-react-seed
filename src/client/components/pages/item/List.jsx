@@ -52,6 +52,25 @@ class List extends React.Component {
   actionUpdate(id) {
     this.context.router.push('/update-item/' + id);
   }
+  actionDelete(id) {
+    this.context.request.deleteRequest({
+      url: 'http://localhost:3000/api/items/' + id,
+      endCallback: (err, req, res)=> {
+        var list = [];
+        if (res.status === 200) {
+          var list = this.state.list.filter((elem) => {
+            if(elem.id === id) {
+              return false;
+            }
+            return true;
+          });
+          this.setState({
+            list
+          });
+        }
+      }
+    });
+  }
 
   renderList() {
     var list = [];
@@ -66,6 +85,7 @@ class List extends React.Component {
             <RB.ButtonToolbar>
               <RB.Button bsStyle="primary" onClick={this.actionView.bind(this, elem.id)}>View</RB.Button>
               <RB.Button bsStyle="warning" onClick={this.actionUpdate.bind(this, elem.id)}>Update</RB.Button>
+              <RB.Button bsStyle="danger" onClick={this.actionDelete.bind(this, elem.id)}>Delete</RB.Button>
             </RB.ButtonToolbar>
           </td>
         </tr>
