@@ -10,6 +10,7 @@ import NotFound from './components/pages/NotFound.jsx';
 import ListItem from './components/pages/item/List.jsx';
 import DetailItem from './components/pages/item/Detail.jsx';
 import CreateItem from './components/pages/item/Create.jsx';
+import UpdateItem from './components/pages/item/Update.jsx';
 import { Router, Route, browserHistory } from 'react-router';
 
 var requestOptions = {
@@ -28,6 +29,7 @@ class App extends React.Component {
               <Route path="/" component={Home}/>
               <Route path="/list-item" component={ListItem}/>
               <Route path="/detail-item/:id" component={DetailItem}/>
+              <Route path="/update-item/:id" component={UpdateItem}/>
               <Route path="/create-item" component={CreateItem}/>
               <Route path="*" component={NotFound}/>
             </Route>

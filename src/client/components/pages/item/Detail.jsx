@@ -16,7 +16,7 @@ class Detail extends React.Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.context.request.getRequest({
       url: 'http://localhost:3000/api/items/' + this.state.id,
       endCallback: (err, req, res)=> {
@@ -43,9 +43,16 @@ class Detail extends React.Component {
   renderEmptyDetails() {
     return (
       <div className="row">
-        <h2>Empty List</h2>
+        <h2>Not Find</h2>
       </div>
     );
+  }
+
+  actionView(id) {
+    this.context.router.push('/detail-item/' + id);
+  }
+  actionUpdate(id) {
+    this.context.router.push('/update-item/' + id);
   }
 
   renderDetails() {
@@ -72,6 +79,9 @@ class Detail extends React.Component {
           {list}
           </tbody>
         </table>
+        <RB.ButtonToolbar>
+          <RB.Button bsStyle="warning" onClick={this.actionUpdate.bind(this, this.state.id)}>Update</RB.Button>
+        </RB.ButtonToolbar>
       </div>
     );
   }
