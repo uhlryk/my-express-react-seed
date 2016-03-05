@@ -38,12 +38,20 @@ How to use this code as new app:
 
 8 edit locals config files. This files are only local, therefore in production they have to be created too.
 
-## Server Commands:
+## Commands:
 
-Transform all server source files:
+### For production:
 
-    gulp compile-dev-server
+Transform all server and client source files:
+
+    gulp compile-production
+
+Run compiled server and client (default url `http://localhost:3000`)
+
+    node app.js
     
+### For development:
+
 Transform all server source files and test them:
 
     gulp test-server
@@ -55,9 +63,46 @@ Transform all server source files, test them and create coverage report:
 Run server with watch changes (default url `http://localhost:3000`):
 
     gulp run-dev-server
-    
+
+Run client with watch changes and hot reloading (default url `http://localhost:3001`):
+
+    gulp run-dev-client
+        
 ## Structure:
 
+ * **app.js**              executable server file (config and run compiled server)
+ * **devServer.js**        executable dev server for client files (hot reloading)
+ * **webpack.config.server.js** webpack configuration to compile server files
+ * **webpack.config.client.prod.js** webpack configuration to production compile client files
+ * **webpack.config.client.dev.js** webpack configuration to dev compile client files (hot loading)
+ * **dist/**                directory with compiled files
+ * **dist/server.js**      compiled server bundle file
+ * **src/**                 all source files
+ * **src/client/**          client source files
+ * **src/config/**          all config files
+ * **src/config/server.js**  global config file
+ * **src/config/*.local.js** all local config file
+ * **src/server/**          server source files 
+ * **tests/**               all tests files
+ * **tests/server/**        server tests
+ 
 ## Technology:
 
+  * express
+  * node.js
+  * sequelize
+  * react
+  * react-router
+  * jsx
+  * redux
+  * hot-loader
+  * webpack
+  * ES6 & ES7
+  * gulp
+  * bootstrap 3
+  * sass
+  * compass
+  
 ## Licence
+
+MIT
