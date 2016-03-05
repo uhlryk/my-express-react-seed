@@ -106,8 +106,8 @@ gulp.task('run-dev-client', function() {
 gulp.task('test-server', ['compile-server'], shell.task([
   './node_modules/.bin/mocha  --check-leaks --timeout 3000 tests/server'
 ]));
-gulp.task('coverage-test-server', ['compile-dev-server'], shell.task([
-  './node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha tests/server --print both --recursive'
+gulp.task('coverage-test-server', ['compile-server'], shell.task([
+  './node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha tests/server --print both --recursive -- -u exports -R spec && open coverage/lcov-report/index.html'
 ]));
 
 
