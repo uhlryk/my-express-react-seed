@@ -11,6 +11,8 @@ import ListItem from './components/pages/item/List.jsx';
 import DetailItem from './components/pages/item/Detail.jsx';
 import CreateItem from './components/pages/item/Create.jsx';
 import UpdateItem from './components/pages/item/Update.jsx';
+import SignOn from './components/pages/user/SignOn.jsx';
+import SuccessSignOn from './components/pages/user/SuccessSignOn.jsx';
 import { Router, Route, browserHistory } from 'react-router';
 
 var requestOptions = {
@@ -31,6 +33,8 @@ class App extends React.Component {
               <Route path="/detail-item/:id" component={DetailItem}/>
               <Route path="/update-item/:id" component={UpdateItem}/>
               <Route path="/create-item" component={CreateItem}/>
+              <Route path="/sign-on" component={SignOn}/>
+              <Route path="/success-sign-on" component={SuccessSignOn}/>
               <Route path="*" component={NotFound}/>
             </Route>
           </Router>

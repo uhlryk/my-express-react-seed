@@ -17,6 +17,7 @@ class TopMenu extends React.Component {
     this.onGoToHomePage = this.onGoToHomePage.bind(this);
     this.onGoToListItemPage = this.onGoToListItemPage.bind(this);
     this.onGoToCreateItemPage = this.onGoToCreateItemPage.bind(this);
+    this.onGoSignOnPage = this.onGoSignOnPage.bind(this);
   }
 
   onGoToHomePage() {
@@ -31,6 +32,10 @@ class TopMenu extends React.Component {
     this.context.router.push('/create-item');
   }
 
+  onGoSignOnPage() {
+    this.context.router.push('/sign-on');
+  }
+
   render() {
     return (
       <RB.Navbar>
@@ -43,6 +48,7 @@ class TopMenu extends React.Component {
             <RB.NavItem eventKey={1} onClick={this.onGoToHomePage}>Home</RB.NavItem>
             <RB.NavItem eventKey={2} onClick={this.onGoToListItemPage} >List Item</RB.NavItem>
             <RB.NavItem eventKey={3} onClick={this.onGoToCreateItemPage} >Create Item</RB.NavItem>
+            <RB.NavItem eventKey={3} onClick={this.onGoSignOnPage} >Sign on</RB.NavItem>
           </RB.Nav>
         </RB.Navbar.Collapse>
       </RB.Navbar>
