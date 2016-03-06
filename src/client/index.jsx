@@ -17,7 +17,6 @@ import SignOn from './components/pages/user/SignOn.jsx';
 import SuccessSignOn from './components/pages/user/SuccessSignOn.jsx';
 import { Router, Route, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux'
-import NotificationSystem from 'react-notification-system';
 
 const store = createStore(reducer);
 const history = syncHistoryWithStore(browserHistory, store);
