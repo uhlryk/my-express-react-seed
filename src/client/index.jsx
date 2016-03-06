@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import style from './sass/style.scss';
 import Request from 'react-context-ajax';
 import createStore from './stores/index.js';
+import { HANDLE_SERVER_PROBLEM } from './actions/index.js';
 import reducer from './reducers/index.js';
 import Content from './components/Content.jsx';
 import Home from './components/pages/Home.jsx';
@@ -18,21 +19,22 @@ import { Router, Route, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux'
 import NotificationSystem from 'react-notification-system';
 
+const store = createStore(reducer);
+const history = syncHistoryWithStore(browserHistory, store);
+
 const requestOptions = {
   baseUrl: 'http://localhost:3000/api',
   endCallback: (err, req, res, done) => {
     if(err) {
-
+      store.dispatch({
+        type: HANDLE_SERVER_PROBLEM
+      })
     } else {
       done(null, req, res);
     }
   }
 
-}
-
-const store = createStore(reducer);
-
-const history = syncHistoryWithStore(browserHistory, store)
+};
 
 ReactDOM.render((
   <Provider store={store}>

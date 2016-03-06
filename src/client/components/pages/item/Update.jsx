@@ -20,7 +20,7 @@ class Update extends React.Component {
 
   componentDidMount() {
     this.context.request.getRequest({
-      url: 'http://localhost:3000/api/items/' + this.state.id,
+      url: '/items/' + this.state.id,
       endCallback: (err, req, res)=> {
         var details = {};
         if (res.body ) {
@@ -43,7 +43,7 @@ class Update extends React.Component {
   handleSubmit(evt) {
     evt.preventDefault();
     this.context.request.putRequest({
-      url: 'http://localhost:3000/api/items/'+ this.state.id,
+      url: '/items/'+ this.state.id,
       body: {
         ...this.state.details
       }, endCallback: (err, req, res)=> {

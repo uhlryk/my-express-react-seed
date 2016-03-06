@@ -40,7 +40,7 @@ class SignOn extends React.Component {
   handleSubmit(evt) {
     evt.preventDefault();
     this.context.request.postRequest({
-      url: 'http://localhost:3000/api/users',
+      url: '/users',
       body: {
         ...this.state.details
       }, endCallback: (err, req, res)=> {

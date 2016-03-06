@@ -5,46 +5,60 @@ import { connect } from 'react-redux';
 @connect(state => ({
   modal: state.modal
 }))
-class Message extends React.Component {
-  static contextTypes = {
-    router: React.PropTypes.object.isRequired
-  };
+class Modal extends React.Component {
 
   constructor(props) {
     super(props);
-    this.actionGo = this.actionGo.bind(this);
+    this.state = {
+      showModal: false
+    }
+    this.close = this.close.bind(this);
   }
 
-  actionGo() {
-    this.context.router.push(this.props.path);
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.modal) {
+      this.setState({
+        showModal: true,
+        title: nextProps.modal.title,
+        body: nextProps.modal.body,
+        button1: nextProps.modal.button1
+      });
+    }
+  }
+
+  close() {
+    this.setState({
+      showModal: false,
+      title: null,
+      body: null,
+      button1: null
+    });
   }
 
   render() {
     let button1 = null;
-    if(this.props.modal.button1) {
+    if(this.state.button1) {
       button1 = (
-        <RB.Button bsStyle="primary" onClick={this.actionGo}>{this.props.modal.button1}</RB.Button>
+        <RB.Button bsStyle="primary" onClick={this.close}>{this.state.button1}</RB.Button>
       );
     }
     return (
-      <div className="static-modal">
-        <RB.Modal.Dialog>
-          <RB.Modal.Header>
-            <RB.Modal.Title>{this.props.modal.title}</RB.Modal.Title>
-          </RB.Modal.Header>
+      <RB.Modal show={this.state.showModal} onHide={this.close}>
+        <RB.Modal.Header>
+          <RB.Modal.Title>{this.state.title}</RB.Modal.Title>
+        </RB.Modal.Header>
 
-          <RB.Modal.Body>
-            {this.props.modal.body}
-          </RB.Modal.Body>
+        <RB.Modal.Body>
+          {this.state.body}
+        </RB.Modal.Body>
 
-          <RB.Modal.Footer>
-            {button1}
-          </RB.Modal.Footer>
+        <RB.Modal.Footer>
+          {button1}
+        </RB.Modal.Footer>
 
-        </RB.Modal.Dialog>
-      </div>
+      </RB.Modal>
     );
   }
 }
 
-export default Message;
+export default Modal;

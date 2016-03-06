@@ -18,7 +18,7 @@ class Detail extends React.Component {
 
   componentDidMount() {
     this.context.request.getRequest({
-      url: 'http://localhost:3000/api/items/' + this.state.id,
+      url: '/items/' + this.state.id,
       endCallback: (err, req, res)=> {
         var details = {};
         if (res.body ) {

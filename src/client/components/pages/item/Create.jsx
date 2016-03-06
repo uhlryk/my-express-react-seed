@@ -29,11 +29,10 @@ class Create extends React.Component {
   handleSubmit(evt) {
     evt.preventDefault();
     this.context.request.postRequest({
-      url: 'http://localhost:3000/api/items',
+      url: '/items',
       body: {
         ...this.state.details
       }, endCallback: (err, req, res)=> {
-        console.log(res);
         this.context.router.push('/detail-item/' + res.body.id);
       }
     });
