@@ -4,7 +4,7 @@ var webpack = require('webpack');
 module.exports = {
   devtool: 'source-map',
   entry: [
-    './src/client/index.js'
+    './src/client/index.jsx'
   ],
   output: {
     path: path.join(__dirname, 'dist', 'client'),
