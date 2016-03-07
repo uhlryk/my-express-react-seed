@@ -1,4 +1,5 @@
-export const HANDLE_SERVER_PROBLEM = 'serverProblem';
+export const SHOW_MODAL = 'showModal';
+export const HIDE_MODAL = 'hideModal';
 
 export const Thunk = {
   //someAction : (router, params) => (dispatch, getState) => {

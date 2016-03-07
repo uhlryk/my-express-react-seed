@@ -1,63 +1,37 @@
 import React from 'react';
 import * as RB from 'react-bootstrap';
-import { connect } from 'react-redux';
 
-@connect(state => ({
-  modal: state.modal
-}))
+import Standard from './Standard.jsx';
+
 class Modal extends React.Component {
+
+  static propsTypes = {
+    title: React.PropTypes.string,
+    body: React.PropTypes.string,
+    onClose: React.PropTypes.func,
+    modalType: React.PropTypes.string,
+    showModal: React.PropTypes.bool
+  };
 
   constructor(props) {
     super(props);
-    this.state = {
-      showModal: false
-    }
     this.close = this.close.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if(nextProps.modal) {
-      this.setState({
-        showModal: true,
-        title: nextProps.modal.title,
-        body: nextProps.modal.body,
-        button1: nextProps.modal.button1
-      });
-    }
-  }
-
   close() {
-    this.setState({
-      showModal: false,
-      title: null,
-      body: null,
-      button1: null
-    });
+    if(this.props.onClose) {
+      this.props.onClose();
+    }
   }
 
   render() {
-    let button1 = null;
-    if(this.state.button1) {
-      button1 = (
-        <RB.Button bsStyle="primary" onClick={this.close}>{this.state.button1}</RB.Button>
-      );
+    let modal = null;
+    switch(this.props.modalType) {
+      case 'Standard':
+      default:
+        modal = <Standard title={this.props.title} body={this.props.body} showModal={this.props.showModal} onClose={this.close} />;
     }
-    return (
-      <RB.Modal show={this.state.showModal} onHide={this.close}>
-        <RB.Modal.Header>
-          <RB.Modal.Title>{this.state.title}</RB.Modal.Title>
-        </RB.Modal.Header>
-
-        <RB.Modal.Body>
-          {this.state.body}
-        </RB.Modal.Body>
-
-        <RB.Modal.Footer>
-          {button1}
-        </RB.Modal.Footer>
-
-      </RB.Modal>
-    );
+    return modal;
   }
 }
 

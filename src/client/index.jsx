@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import style from './sass/style.scss';
 import Request from 'react-context-ajax';
 import createStore from './stores/index.js';
-import { HANDLE_SERVER_PROBLEM } from './actions/index.js';
+import { SHOW_MODAL } from './actions/index.js';
 import reducer from './reducers/index.js';
 import Content from './components/Content.jsx';
 import Home from './components/pages/Home.jsx';
@@ -26,13 +26,14 @@ const requestOptions = {
   endCallback: (err, req, res, done) => {
     if(err) {
       store.dispatch({
-        type: HANDLE_SERVER_PROBLEM
+        type: SHOW_MODAL,
+        title: 'Error',
+        body: 'There was problem with connection to server'
       })
     } else {
       done(null, req, res);
     }
   }
-
 };
 
 ReactDOM.render((

@@ -1,14 +1,17 @@
-import { HANDLE_SERVER_PROBLEM } from '../actions/index';
+import { SHOW_MODAL } from '../actions/index';
 
 export default function modal(state = false, action) {
   switch(action.type) {
-    case HANDLE_SERVER_PROBLEM:
+    case SHOW_MODAL:
       return {
-        title: 'Error',
-        body: 'There was problem with connection to server',
-        button1: 'Close'
+        showModal: true,
+        modalType: action.modalType,
+        title: action.title,
+        body: action.body
       };
     default:
-      return false
+      return {
+        showModal: false
+      }
   }
 }
