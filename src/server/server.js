@@ -3,7 +3,7 @@ import path from 'path';
 import fs from 'fs';
 import http from 'http';
 import Logger from './utils/Logger';
-import routes from './routes/index';
+import apiRoutes from './apiRoutes/index';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import expressValidator from 'express-validator';
@@ -92,7 +92,7 @@ export function config(localConfig = {}, callbacks = {}) {
     }
   }));
 
-  app.use('/api', routes);
+  app.use('/api', apiRoutes);
 
   if(callbacks.onBeforeClientMiddleware) {
     callbacks.onBeforeClientMiddleware(app);
