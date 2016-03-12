@@ -25,10 +25,10 @@ module.exports = {
         include: path.join(__dirname, 'src/client'),
         exclude: /node_modules/
       },
-      //{
-      //  test: /\.scss$/,
-      //  loaders: ['style', 'css', 'sass']
-      //},
+      {
+        test: /\.scss$/,
+        loaders: ['style', 'css', 'sass']
+      },
       {
         test: /\.(png|woff|woff2|eot|ttf|svg)$/,
         loader: 'url-loader?limit=100000'
@@ -40,11 +40,11 @@ module.exports = {
       }
     ]
   },
-  //sassLoader: {
-  //  includePaths: [
-  //    path.resolve(__dirname, './node_modules/bootstrap-sass/assets/stylesheets/'),
-  //    path.resolve(__dirname, './node_modules/compass-mixins/lib/')
-  //  ]
-  //},
+  sassLoader: {
+    includePaths: [
+      path.resolve(__dirname, './node_modules/bootstrap-sass/assets/stylesheets/'),
+      path.resolve(__dirname, './node_modules/compass-mixins/lib/')
+    ]
+  },
 
 };

@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom';
-
+import style from './sass/style.scss';
 import { browserHistory } from 'react-router';
 import App from './App.jsx';
 

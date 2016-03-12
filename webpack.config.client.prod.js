@@ -1,5 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   devtool: 'source-map',
@@ -21,7 +22,8 @@ module.exports = {
       compressor: {
         warnings: false
       }
-    })
+    }),
+    new ExtractTextPlugin('style.css')
   ],
   module: {
     loaders: [
@@ -31,10 +33,10 @@ module.exports = {
         include: path.join(__dirname, 'src/client'),
         exclude: /node_modules/
       },
-      //{
-      //  test: /\.scss$/,
-      //  loaders: ['style', 'css', 'sass']
-      //},
+      {
+        test: /\.scss$/,
+        loader: ExtractTextPlugin.extract('style', 'css!sass')
+      },
       {
         test: /\.(png|woff|woff2|eot|ttf|svg)$/,
         loader: 'url-loader?limit=100000'
@@ -46,10 +48,10 @@ module.exports = {
       }
     ]
   },
-  //sassLoader: {
-  //  includePaths: [
-  //    path.resolve(__dirname, './node_modules/bootstrap-sass/assets/stylesheets/'),
-  //    path.resolve(__dirname, './node_modules/compass-mixins/lib/')
-  //  ]
-  //},
+  sassLoader: {
+    includePaths: [
+      path.resolve(__dirname, './node_modules/bootstrap-sass/assets/stylesheets/'),
+      path.resolve(__dirname, './node_modules/compass-mixins/lib/')
+    ]
+  },
 };

@@ -1,5 +1,4 @@
 import React from 'react';
-//import style from './sass/style.scss';
 import Request from 'react-context-ajax';
 import { Provider } from 'react-redux';
 import { syncHistoryWithStore } from 'react-router-redux';
