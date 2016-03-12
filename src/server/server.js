@@ -19,6 +19,11 @@ import validationGroups from './validations/groups/index';
 import customValidators from './validations/validators/index';
 import customSanitizers from './validations/sanitizers/index';
 
+import React from 'react';
+import ReactDOMServer from 'react-dom/server';
+import { createMemoryHistory } from 'react-router';
+import App from '../client/App.jsx';
+
 export function config(localConfig = {}, callbacks = {}) {
   var config = _.merge({}, serverConfig, localConfig);
   var logger = new Logger();
@@ -49,6 +54,9 @@ export function config(localConfig = {}, callbacks = {}) {
   });
 
   var app = express();
+
+  app.set('view engine', 'ejs');
+  app.set('views', path.join(__dirname, 'views'));
 
   app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
@@ -92,7 +100,19 @@ export function config(localConfig = {}, callbacks = {}) {
 
   app.use('/static',express.static(path.join(__dirname, 'client')));
   app.use('/*', function(req, res){
-    res.sendFile(path.join(__dirname + '/client/index.html'));
+    const history = createMemoryHistory(req.originalUrl || '/');
+    const initialState = {};
+    let staticHTML = ReactDOMServer.renderToString(
+      React.createFactory(App)({
+        history,
+        initialState
+      })
+    );
+
+    res.render('index', {
+      staticHTML,
+      initialState: JSON.stringify(initialState)
+    });
   });
 
   var server = http.createServer(app);

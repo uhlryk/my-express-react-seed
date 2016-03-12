@@ -40,7 +40,7 @@ class TopMenu extends React.Component {
     return (
       <RB.Navbar>
         <RB.Navbar.Header>
-          <RB.Navbar.Brand ><a href="#" onClick={this.onGoToHomePage} >Some App</a></RB.Navbar.Brand>
+          <RB.Navbar.Brand ><a href="/" onClick={this.onGoToHomePage} >Some App</a></RB.Navbar.Brand>
           <RB.Navbar.Toggle />
         </RB.Navbar.Header>
         <RB.Navbar.Collapse>

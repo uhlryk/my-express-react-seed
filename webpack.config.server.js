@@ -12,9 +12,9 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /.js$/,
-        loaders: ['babel?presets[]=es2015,presets[]=stage-0'],
-        include: path.join(__dirname, 'src/server'),
+        test: /.jsx?$/,
+        loaders: ['babel?presets[]=react,presets[]=es2015,presets[]=stage-0,plugins[]=transform-decorators-legacy'],
+        include: path.join(__dirname, 'src/'),
         exclude: /node_modules/
       },
       {

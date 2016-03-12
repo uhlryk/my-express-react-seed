@@ -7,6 +7,7 @@ var nodemon= require('nodemon');
 var shell = require('gulp-shell')
 var serverConfig = require('./webpack.config.server');
 var clientProdConfig = require('./webpack.config.client.prod');
+var delPath = require('del');
 
 function onBuild(done) {
   return function(err, stats) {
@@ -22,10 +23,13 @@ function onBuild(done) {
     }
   }
 }
+gulp.task('delete-dist', function(done) {
+  delPath(['./dist/'], done);
+});
 
 gulp.task('copy-sever-layout', function() {
-  return gulp.src(['./src/server/emailTemplates/**/*'])
-    .pipe(gulp.dest('./dist/emailTemplates'))
+  return gulp.src(['./src/server/emailTemplates/**/*', './src/server/views/**/*'], { 'base' : './src/server' })
+    .pipe(gulp.dest('./dist/'))
 });
 
 gulp.task('copy-client-layout', function() {
@@ -59,7 +63,7 @@ gulp.task('compile-production', ['compile-client', 'compile-server']);
 /**
  * development compile dev server which also run client dev
  */
-gulp.task('watch-dev-server', ['copy-client-layout', 'copy-sever-layout'], function() {
+gulp.task('watch-dev-server', ['copy-client-layout', 'copy-sever-layout', 'compile-production'], function() {
   var firstStart = false;
   webpack(serverConfig).watch(100, function(err, stats) {
     onBuild()(err, stats);
@@ -86,7 +90,7 @@ gulp.task('run-dev-server', ['watch-dev-server'], function() {
   });
 });
 
-gulp.task('run-dev-client', function() {
+gulp.task('run-dev-client', ['copy-sever-layout'], function() {
   nodemon({
     execMap: {
       js: 'node'

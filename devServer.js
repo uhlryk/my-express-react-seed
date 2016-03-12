@@ -6,6 +6,9 @@ var webpack = require('webpack');
 var app = express();
 var compiler = webpack(config);
 
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, './dist/views'));
+
 app.use(require('webpack-dev-middleware')(compiler, {
   noInfo: true,
   publicPath: config.output.publicPath
@@ -14,7 +17,7 @@ app.use(require('webpack-dev-middleware')(compiler, {
 app.use(require('webpack-hot-middleware')(compiler));
 
 app.get('*', function(req, res) {
-  res.sendFile(path.join(__dirname, 'dist', 'client', 'index.html'));
+  res.render('index');
 });
 
 app.listen(3001, '0.0.0.0', function(err) {
