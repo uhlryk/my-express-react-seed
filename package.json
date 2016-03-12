@@ -9,7 +9,13 @@
     "type": "git",
     "url": "https://github.com/uhlryk/my-express-react-seed.git"
   },
-  "scripts": {},
+  "scripts": {
+    "compile": "gulp compile",
+    "dev-hot": "gulp dev-hot",
+    "dev-normal": "gulp dev-normal",
+    "test": "gulp test",
+    "coverage": "gulp coverage"
+  },
   "license": "MIT",
   "author": "Krzysztof Sztompka <sztompka.krzysztof@gmail.com>",
   "bugs": {
