@@ -44,29 +44,25 @@ How to use this code as new app:
 
 Transform all server and client source files:
 
-    gulp compile-production
-
-Run compiled server and client (default url `http://localhost:3000`)
-
-    node app.js
-    
+    gulp compile
+   
 ### For development:
 
 Transform all server source files and test them:
 
-    gulp test-server
+    gulp test
     
 Transform all server source files, test them and create coverage report:
 
-    gulp coverage-test-server
+    gulp coverage
     
-Run server with watch changes (default url `http://localhost:3000`):
+Run server and client with watch changes (default url `http://localhost:3000`):
 
-    gulp run-dev-server
+    gulp dev-normal
 
-Run client with watch changes and hot reloading (default url `http://localhost:3001`):
+Run server and client with watch changes and hot reloading (default url `http://localhost:3001`):
 
-    gulp run-dev-client
+    gulp dev-hot
         
 ## Structure:
 
