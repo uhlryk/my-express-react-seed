@@ -88,6 +88,7 @@ Run server and client with watch changes and hot reloading (default url `http://
   * node.js
   * sequelize
   * react
+  * server side react render
   * react-router
   * jsx
   * redux
