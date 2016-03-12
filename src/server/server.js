@@ -4,6 +4,7 @@ import fs from 'fs';
 import http from 'http';
 import Logger from './utils/Logger';
 import apiRoutes from './apiRoutes/index';
+import clientRoutes from './clientRoutes/index';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import expressValidator from 'express-validator';
@@ -18,11 +19,6 @@ import Actions from './actions/index';
 import validationGroups from './validations/groups/index';
 import customValidators from './validations/validators/index';
 import customSanitizers from './validations/sanitizers/index';
-
-import React from 'react';
-import ReactDOMServer from 'react-dom/server';
-import { createMemoryHistory } from 'react-router';
-import App from '../client/App.jsx';
 
 export function config(localConfig = {}, callbacks = {}) {
   var config = _.merge({}, serverConfig, localConfig);
@@ -99,21 +95,8 @@ export function config(localConfig = {}, callbacks = {}) {
   }
 
   app.use('/static',express.static(path.join(__dirname, 'client')));
-  app.use('/*', function(req, res){
-    const history = createMemoryHistory(req.originalUrl || '/');
-    const initialState = {};
-    let staticHTML = ReactDOMServer.renderToString(
-      React.createFactory(App)({
-        history,
-        initialState
-      })
-    );
 
-    res.render('index', {
-      staticHTML,
-      initialState: JSON.stringify(initialState)
-    });
-  });
+  app.use(clientRoutes);
 
   var server = http.createServer(app);
 

@@ -9,7 +9,6 @@
 <body>
 <div id="root"><%- staticHTML %></div>
 <script>
-  console.log(<%- initialState %>);
   window.__INITIAL_STATE__ = JSON.parse('<%- initialState %>');
 </script>
 <script src="/static/bundle.js"></script>
