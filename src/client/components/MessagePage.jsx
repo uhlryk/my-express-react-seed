@@ -7,12 +7,8 @@ class Message extends React.Component {
 
   constructor(props) {
     super(props);
-    this.actionGo = this.actionGo.bind(this);
   }
 
-  actionGo() {
-    this.context.router.push(this.props.path);
-  }
 
   render() {
     return (
@@ -23,7 +19,7 @@ class Message extends React.Component {
             {this.props.message}
             your account has been successfully created
           </p>
-          <p><RB.Button bsStyle="primary" onClick={this.actionGo}>{this.props.button}</RB.Button></p>
+          <p><Link to={this.props.path}>{this.props.button}</Link></p>
         </RB.Jumbotron>
       </div>
     );

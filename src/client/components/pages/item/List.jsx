@@ -1,5 +1,6 @@
 import React from 'react';
 import * as RB from 'react-bootstrap';
+import { Link } from 'react-router';
 class List extends React.Component {
 
   static contextTypes = {
@@ -46,15 +47,9 @@ class List extends React.Component {
       </div>
     );
   }
-  actionView(id) {
-    this.context.router.push('/detail-item/' + id);
-  }
-  actionUpdate(id) {
-    this.context.router.push('/update-item/' + id);
-  }
   actionDelete(id) {
     this.context.request.deleteRequest({
-      url: 'http://localhost:3000/api/items/' + id,
+      url: '/items/' + id,
       endCallback: (err, req, res)=> {
         var list = [];
         if (res.status === 200) {
@@ -83,8 +78,8 @@ class List extends React.Component {
           <td>{elem.updatedAt}</td>
           <td>
             <RB.ButtonToolbar>
-              <RB.Button bsStyle="primary" onClick={this.actionView.bind(this, elem.id)}>View</RB.Button>
-              <RB.Button bsStyle="warning" onClick={this.actionUpdate.bind(this, elem.id)}>Update</RB.Button>
+              <Link className="btn btn-primary" role="button" to={'/detail-item/' + elem.id}>View</Link>
+              <Link className="btn btn-warning" role="button" to={'/update-item/' + elem.id}>Update</Link>
               <RB.Button bsStyle="danger" onClick={this.actionDelete.bind(this, elem.id)}>Delete</RB.Button>
             </RB.ButtonToolbar>
           </td>
