@@ -10,6 +10,7 @@
     "url": "https://github.com/uhlryk/my-express-react-seed.git"
   },
   "scripts": {
+    "init": "sh ./init.sh",
     "compile": "gulp compile",
     "dev-hot": "gulp dev-hot",
     "dev-normal": "gulp dev-normal",

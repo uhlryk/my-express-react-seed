@@ -28,15 +28,29 @@ How to use this code as new app:
 
     npm install
 
-6 copy server config file and name it server.local.js
+### Config files
 
-    cp src/configs/server.js src/configs/server.local.js
+All configs are in :
+
+    src/config
     
-7 copy server config file and name it server-test.local.js
+You can try to run `npm init` which create configs files.
+Or if this not working do it manually:
 
-    cp src/configs/server.js src/configs/server-test.local.js
+1 copy server.template.js config file and name it server.local.js
 
-8 edit locals config files. This files are only local, therefore in production they have to be created too.
+    cp src/configs/server.template.js src/configs/server.local.js
+    
+2 copy server.template.js config file and name it server-test.local.js
+
+    cp src/configs/server.template.js src/configs/server-test.local.js
+
+3 copy client.template.js config file and name it client.local.js
+
+    cp src/configs/client.template.js src/configs/client.local.js
+ 
+    
+In both cases edit this files with your local settings.
 
 ## Commands:
 

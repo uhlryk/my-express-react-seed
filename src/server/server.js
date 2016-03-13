@@ -10,7 +10,6 @@ import bodyParser from 'body-parser';
 import expressValidator from 'express-validator';
 import _ from 'lodash';
 
-import serverConfig from '../configs/server';
 import onNewDb from './hooks/onNewDb';
 import onServerStart from './hooks/onServerStart';
 import Models from './models/index';
@@ -20,8 +19,7 @@ import validationGroups from './validations/groups/index';
 import customValidators from './validations/validators/index';
 import customSanitizers from './validations/sanitizers/index';
 
-export function config(localConfig = {}, callbacks = {}) {
-  var config = _.merge({}, serverConfig, localConfig);
+export function config(config = {}, callbacks = {}) {
   var logger = new Logger();
 
   var models = Models({
