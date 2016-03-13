@@ -16,35 +16,43 @@ import createStore from './stores/index.js';
 import reducer from './reducers/index.js';
 import { Router, Route } from 'react-router';
 
-const requestOptions = {
-  baseUrl: 'http://localhost:3000/api',
-  endCallback: (err, req, res, done) => {
-    if(err) {
-      store.dispatch({
-        type: SHOW_MODAL,
-        title: 'Error',
-        body: 'There was problem with connection to server'
-      })
-    } else {
-      done(null, req, res);
-    }
-  }
-};
-
 class App extends React.Component {
   static propsTypes = {
     history: React.PropTypes.object,
+    config: React.PropTypes.object,
     initialState: React.PropTypes.object
+  };
+  static childContextTypes = {
+    config: React.PropTypes.object
   };
   constructor(props) {
     super(props);
     this.store = createStore(reducer, this.props.initialState);
     this.syncHistory= syncHistoryWithStore(this.props.history, this.store);
+    this.requestOptions = {
+      baseUrl: this.props.config.serverApiUrl,
+      endCallback: (err, req, res, done) => {
+        if(err) {
+          store.dispatch({
+            type: SHOW_MODAL,
+            title: 'Error',
+            body: 'There was problem with connection to server'
+          })
+        } else {
+          done(null, req, res);
+        }
+      }
+    };
+  }
+  getChildContext() {
+    return {
+      config: this.props.config
+    }
   }
   render() {
     return (
       <Provider store={this.store}>
-        <Request {...requestOptions}>
+        <Request {...this.requestOptions}>
           <Router history={this.syncHistory}>
             <Route component={Content}>
               <Route path="/" component={Home}/>
