@@ -4,7 +4,8 @@ class Update extends React.Component {
 
   static contextTypes = {
     request: React.PropTypes.object.isRequired,
-    router: React.PropTypes.object.isRequired
+    router: React.PropTypes.object.isRequired,
+    showNotification: React.PropTypes.func
   };
 
   constructor(props) {
@@ -47,6 +48,7 @@ class Update extends React.Component {
       body: {
         ...this.state.details
       }, endCallback: (err, req, res)=> {
+        this.context.showNotification('Item was updated');
         this.context.router.push('/detail-item/' + this.state.id);
       }
     });

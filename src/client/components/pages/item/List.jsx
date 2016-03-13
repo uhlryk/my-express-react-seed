@@ -5,7 +5,8 @@ class List extends React.Component {
 
   static contextTypes = {
     request: React.PropTypes.object.isRequired,
-    router: React.PropTypes.object.isRequired
+    router: React.PropTypes.object.isRequired,
+    showNotification: React.PropTypes.func
   };
 
   constructor(props) {
@@ -53,6 +54,7 @@ class List extends React.Component {
       endCallback: (err, req, res)=> {
         var list = [];
         if (res.status === 200) {
+          this.context.showNotification('Item was deleted');
           var list = this.state.list.filter((elem) => {
             if(elem.id === id) {
               return false;

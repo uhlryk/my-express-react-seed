@@ -4,7 +4,8 @@ class Create extends React.Component {
 
   static contextTypes = {
     request: React.PropTypes.object.isRequired,
-    router: React.PropTypes.object.isRequired
+    router: React.PropTypes.object.isRequired,
+    showNotification: React.PropTypes.func
   };
 
   constructor(props) {
@@ -33,6 +34,7 @@ class Create extends React.Component {
       body: {
         ...this.state.details
       }, endCallback: (err, req, res)=> {
+        this.context.showNotification('Item was created');
         this.context.router.push('/detail-item/' + res.body.id);
       }
     });

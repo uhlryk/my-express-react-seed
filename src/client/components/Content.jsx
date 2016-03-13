@@ -9,6 +9,9 @@ import { HIDE_MODAL } from '../actions/index';
   modal: state.modal
 }))
 class Content extends React.Component {
+  static childContextTypes = {
+    showNotification: React.PropTypes.func
+  };
   constructor(props) {
     super(props);
     this.closeModal = this.closeModal.bind(this);
@@ -18,6 +21,24 @@ class Content extends React.Component {
     this.props.dispatch({
       type: HIDE_MODAL
     });
+  }
+  getChildContext() {
+    return {
+      showNotification: (optionsOrMessage, title, level) => {
+        if(typeof optionsOrMessage === 'string'){
+          this._notificationSystem.addNotification({
+            message: optionsOrMessage,
+            title,
+            level: level || 'info'
+          });
+        } else {
+          this._notificationSystem.addNotification(optionsOrMessage);
+        }
+      }
+    }
+  }
+  componentDidMount() {
+    this._notificationSystem = this.refs.notificationSystem;
   }
 
   render() {
