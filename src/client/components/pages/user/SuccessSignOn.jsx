@@ -7,8 +7,8 @@ class SuccessSignOn extends React.Component {
     return (
       <MessagePage
         title="Success"
-        message="your account has been successfully created"
-        button="home"
+        body="your account has been successfully created"
+        label="home"
         path="/"
       />
     );

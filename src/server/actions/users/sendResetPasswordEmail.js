@@ -6,7 +6,7 @@ export default function (globals) {
     var token = params.token;
     var targetEmail = params.targetEmail;
     globals.emailSender('resetPassword',globals.config.fromEmail, targetEmail, 'reset password', {
-      link: globals.config.host + '/resetPassword/' + token
+      link: globals.config.clientUrl + '/resetPassword/' + token
     }, (error, response) => {
       callback(error, response);
     });

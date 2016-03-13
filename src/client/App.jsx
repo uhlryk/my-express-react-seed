@@ -12,6 +12,7 @@ import CreateItem from './components/pages/item/Create.jsx';
 import UpdateItem from './components/pages/item/Update.jsx';
 import SignOn from './components/pages/user/SignOn.jsx';
 import SuccessSignOn from './components/pages/user/SuccessSignOn.jsx';
+import ActivateUser from './components/pages/user/ActivateUser.jsx';
 import createStore from './stores/index.js';
 import reducer from './reducers/index.js';
 import { Router, Route } from 'react-router';
@@ -33,7 +34,7 @@ class App extends React.Component {
       baseUrl: this.props.config.serverApiUrl,
       endCallback: (err, req, res, done) => {
         if(err) {
-          store.dispatch({
+          this.store.dispatch({
             type: SHOW_MODAL,
             title: 'Error',
             body: 'There was problem with connection to server'
@@ -55,14 +56,15 @@ class App extends React.Component {
         <Request {...this.requestOptions}>
           <Router history={this.syncHistory}>
             <Route component={Content}>
-              <Route path="/" component={Home}/>
-              <Route path="/list-item" component={ListItem}/>
-              <Route path="/detail-item/:id" component={DetailItem}/>
-              <Route path="/update-item/:id" component={UpdateItem}/>
-              <Route path="/create-item" component={CreateItem}/>
-              <Route path="/sign-on" component={SignOn}/>
-              <Route path="/success-sign-on" component={SuccessSignOn}/>
-              <Route path="*" component={NotFound}/>
+              <Route path='/' component={Home}/>
+              <Route path='/list-item' component={ListItem}/>
+              <Route path='/detail-item/:id' component={DetailItem}/>
+              <Route path='/update-item/:id' component={UpdateItem}/>
+              <Route path='/create-item' component={CreateItem}/>
+              <Route path='/sign-on' component={SignOn}/>
+              <Route path='/success-sign-on' component={SuccessSignOn}/>
+              <Route path='/activate-user/:token' component={ActivateUser}/>
+              <Route path='*' component={NotFound}/>
             </Route>
           </Router>
         </Request>

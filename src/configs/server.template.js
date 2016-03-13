@@ -24,7 +24,7 @@ var config = {
       pass: ''
     }
   },
-  host: 'your.domain.com',
+  clientUrl: '//0.0.0.0:3000',
   fromEmail: 'your.email@test.com'
 }
 
