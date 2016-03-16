@@ -1,8 +1,8 @@
 import React from 'react';
-import Request from 'react-context-ajax';
 import { Provider } from 'react-redux';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { SHOW_MODAL } from './actions/index.js';
+import Request from './Request.jsx';
 import Content from './components/Content.jsx';
 import Home from './components/pages/Home.jsx';
 import NotFound from './components/pages/NotFound.jsx';
@@ -31,28 +31,6 @@ class App extends React.Component {
     super(props);
     this.store = createStore(reducer, this.props.initialState);
     this.syncHistory= syncHistoryWithStore(this.props.history, this.store);
-    this.requestOptions = {
-      baseUrl: this.props.config.serverApiUrl,
-      endCallback: (err, req, res, done) => {
-        if (err && (err.status === 404 || err.status === 422)) {
-          done(err);
-        } else if (err && err.status >= 500) {
-          this.store.dispatch({
-            type: SHOW_MODAL,
-            title: 'Error',
-            body: 'There was server error with processing this request'
-          });
-        } else if(err) {
-          this.store.dispatch({
-            type: SHOW_MODAL,
-            title: 'Error',
-            body: 'There was problem with connection to server'
-          });
-        } else {
-          done(null, req, res);
-        }
-      }
-    };
   }
   getChildContext() {
     return {
@@ -62,7 +40,7 @@ class App extends React.Component {
   render() {
     return (
       <Provider store={this.store}>
-        <Request {...this.requestOptions}>
+        <Request baseUrl={this.props.config.serverApiUrl} >
           <Router history={this.syncHistory}>
             <Route component={Content}>
               <Route path='/' component={Home}/>
