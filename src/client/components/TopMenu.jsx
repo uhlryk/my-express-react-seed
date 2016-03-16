@@ -29,7 +29,11 @@ class TopMenu extends React.Component {
             <li ><Link to='/'>Home</Link></li>
             <li ><Link to='/list-item'>List Item</Link></li>
             <li ><Link to='/create-item'>Create Item</Link></li>
+
+          </RB.Nav>
+          <RB.Nav pullRight>
             <li ><Link to='/sign-on'>Sign on</Link></li>
+            <li ><Link to='/sign-in'>Sign in</Link></li>
           </RB.Nav>
         </RB.Navbar.Collapse>
       </RB.Navbar>

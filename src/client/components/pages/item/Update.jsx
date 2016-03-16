@@ -5,7 +5,7 @@ class Update extends React.Component {
   static contextTypes = {
     request: React.PropTypes.object.isRequired,
     router: React.PropTypes.object.isRequired,
-    showNotification: React.PropTypes.func
+    showNotification: React.PropTypes.func.isRequired
   };
 
   constructor(props) {

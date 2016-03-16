@@ -11,6 +11,7 @@ import DetailItem from './components/pages/item/Detail.jsx';
 import CreateItem from './components/pages/item/Create.jsx';
 import UpdateItem from './components/pages/item/Update.jsx';
 import SignOn from './components/pages/user/SignOn.jsx';
+import SignIn from './components/pages/user/SignIn.jsx';
 import SuccessSignOn from './components/pages/user/SuccessSignOn.jsx';
 import ActivateUser from './components/pages/user/ActivateUser.jsx';
 import createStore from './stores/index.js';
@@ -33,7 +34,7 @@ class App extends React.Component {
     this.requestOptions = {
       baseUrl: this.props.config.serverApiUrl,
       endCallback: (err, req, res, done) => {
-        if (err && err.status === 404) {
+        if (err && (err.status === 404 || err.status === 422)) {
           done(err);
         } else if (err && err.status >= 500) {
           this.store.dispatch({
@@ -70,6 +71,7 @@ class App extends React.Component {
               <Route path='/update-item/:id' component={UpdateItem}/>
               <Route path='/create-item' component={CreateItem}/>
               <Route path='/sign-on' component={SignOn}/>
+              <Route path='/sign-in' component={SignIn}/>
               <Route path='/success-sign-on' component={SuccessSignOn}/>
               <Route path='/activate-user/:token' component={ActivateUser}/>
               <Route path='*' component={NotFound}/>

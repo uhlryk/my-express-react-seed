@@ -1,4 +1,4 @@
-import { SHOW_MODAL } from '../actions/index';
+import { SHOW_MODAL, HIDE_MODAL } from '../actions/index';
 
 export default function modal(state = false, action) {
   switch(action.type) {
@@ -9,9 +9,11 @@ export default function modal(state = false, action) {
         title: action.title,
         body: action.body
       };
-    default:
+    case HIDE_MODAL:
       return {
         showModal: false
       }
+    default:
+      return state
   }
 }
