@@ -1,5 +1,7 @@
 import React from 'react';
 import * as RB from 'react-bootstrap';
+import MessagePage from '../../MessagePage.jsx';
+
 class Detail extends React.Component {
 
   static contextTypes = {
@@ -21,7 +23,7 @@ class Detail extends React.Component {
       url: '/items/' + this.state.id,
       endCallback: (err, req, res)=> {
         var details = {};
-        if (res.body ) {
+        if (res && res.body ) {
           details = res.body;
         }
         this.setState({
@@ -42,9 +44,12 @@ class Detail extends React.Component {
 
   renderEmptyDetails() {
     return (
-      <div className="row">
-        <h2>Not Find</h2>
-      </div>
+      <MessagePage
+        title="NOT FOUND"
+        body="This resource doesn't exist"
+        label="home"
+        path="/"
+      />
     );
   }
 

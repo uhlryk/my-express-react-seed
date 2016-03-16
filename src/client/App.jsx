@@ -33,12 +33,20 @@ class App extends React.Component {
     this.requestOptions = {
       baseUrl: this.props.config.serverApiUrl,
       endCallback: (err, req, res, done) => {
-        if(err) {
+        if (err && err.status === 404) {
+          done(err);
+        } else if (err && err.status >= 500) {
+          this.store.dispatch({
+            type: SHOW_MODAL,
+            title: 'Error',
+            body: 'There was server error with processing this request'
+          });
+        } else if(err) {
           this.store.dispatch({
             type: SHOW_MODAL,
             title: 'Error',
             body: 'There was problem with connection to server'
-          })
+          });
         } else {
           done(null, req, res);
         }
