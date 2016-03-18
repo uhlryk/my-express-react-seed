@@ -20,7 +20,7 @@ class Request extends React.Component {
             body: 'There was server error with processing this request'
           });
         } else if(err) {
-          this.store.dispatch({
+          this.props.store.dispatch({
             type: SHOW_MODAL,
             title: 'Error',
             body: 'There was problem with connection to server'
