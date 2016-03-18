@@ -5,7 +5,7 @@ import * as Actions from '../actions/index.js';
 import { Link } from 'react-router';
 
 @connect(state => ({
-  page: state.page
+  user: state.user
 }))
 class TopMenu extends React.Component {
 
@@ -18,6 +18,23 @@ class TopMenu extends React.Component {
   }
 
   render() {
+    let rightMenu = false;
+    if(this.props.user) {
+      rightMenu = (
+        <RB.Nav pullRight>
+          <RB.NavDropdown title={this.props.user.email}>
+            <li ><Link to='/logout'>Logout</Link></li>
+          </RB.NavDropdown>
+        </RB.Nav>
+      );
+    } else {
+      rightMenu = (
+        <RB.Nav pullRight>
+          <li ><Link to='/sign-on'>Sign on</Link></li>
+          <li ><Link to='/sign-in'>Sign in</Link></li>
+        </RB.Nav>
+      );
+    }
     return (
       <RB.Navbar>
         <RB.Navbar.Header>
@@ -31,10 +48,7 @@ class TopMenu extends React.Component {
             <li ><Link to='/create-item'>Create Item</Link></li>
 
           </RB.Nav>
-          <RB.Nav pullRight>
-            <li ><Link to='/sign-on'>Sign on</Link></li>
-            <li ><Link to='/sign-in'>Sign in</Link></li>
-          </RB.Nav>
+          {rightMenu}
         </RB.Navbar.Collapse>
       </RB.Navbar>
     );

@@ -49,8 +49,6 @@ class Content extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('A');
-    console.log(nextProps);
     if(nextProps.user && nextProps.user.token) {
       this.context.request.addHeader('access-token', nextProps.user.token);
     } else {
