@@ -1,5 +1,7 @@
 import React from 'react';
 import * as RB from 'react-bootstrap';
+import Loading from '../../helpers/Loading.jsx';
+
 class Update extends React.Component {
 
   static contextTypes = {
@@ -56,9 +58,7 @@ class Update extends React.Component {
 
   renderLoading() {
     return (
-      <div className="row">
-        <h2>...LOADING...</h2>
-      </div>
+      <Loading />
     );
   }
 

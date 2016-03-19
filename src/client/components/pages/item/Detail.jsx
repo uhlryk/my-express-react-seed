@@ -1,6 +1,7 @@
 import React from 'react';
 import * as RB from 'react-bootstrap';
 import MessagePage from '../../helpers/MessagePage.jsx';
+import Loading from '../../helpers/Loading.jsx';
 
 class Detail extends React.Component {
 
@@ -36,9 +37,7 @@ class Detail extends React.Component {
 
   renderLoading() {
     return (
-      <div className="row">
-        <h2>...LOADING...</h2>
-      </div>
+      <Loading />
     );
   }
 

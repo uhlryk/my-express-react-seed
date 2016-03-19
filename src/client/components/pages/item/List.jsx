@@ -1,6 +1,8 @@
 import React from 'react';
 import * as RB from 'react-bootstrap';
 import { Link } from 'react-router';
+import Loading from '../../helpers/Loading.jsx';
+
 class List extends React.Component {
 
   static contextTypes = {
@@ -35,9 +37,7 @@ class List extends React.Component {
 
   renderLoading() {
     return (
-      <div className="row">
-        <h2>...LOADING...</h2>
-      </div>
+      <Loading />
     );
   }
 

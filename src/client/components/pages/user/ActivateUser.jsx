@@ -1,5 +1,6 @@
 import React from 'react';
 import MessagePage from '../../helpers/MessagePage.jsx';
+import Loading from '../../helpers/Loading.jsx';
 class ActivateUser extends React.Component {
   static contextTypes = {
     request: React.PropTypes.object.isRequired,
@@ -56,9 +57,7 @@ class ActivateUser extends React.Component {
   }
   renderLoading() {
     return (
-      <div className="row">
-        <h2>...LOADING...</h2>
-      </div>
+      <Loading />
     );
   }
 
