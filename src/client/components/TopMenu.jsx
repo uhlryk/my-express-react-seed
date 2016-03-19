@@ -22,7 +22,7 @@ class TopMenu extends React.Component {
     if(this.props.user) {
       rightMenu = (
         <RB.Nav pullRight>
-          <RB.NavDropdown title={this.props.user.email}>
+          <RB.NavDropdown title={this.props.user.email} id='usermenu'>
             <li ><Link to='/logout'>Logout</Link></li>
           </RB.NavDropdown>
         </RB.Nav>
