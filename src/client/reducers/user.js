@@ -1,4 +1,4 @@
-import { SET_USER } from '../actions/index';
+import { SET_USER, REMOVE_USER } from '../actions/index';
 
 export default function user(state = false, action) {
   switch(action.type) {
@@ -7,6 +7,8 @@ export default function user(state = false, action) {
         token: action.token,
         email: action.email
       };
+    case REMOVE_USER:
+      return false;
     default:
       return state
   }
