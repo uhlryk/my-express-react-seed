@@ -1,6 +1,6 @@
 import React from 'react';
 import * as RB from 'react-bootstrap';
-import MessagePage from '../../MessagePage.jsx';
+import MessagePage from '../../helpers/MessagePage.jsx';
 
 class Detail extends React.Component {
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import MessagePage from '../../MessagePage.jsx';
+import MessagePage from '../../helpers/MessagePage.jsx';
 class SuccessSignOn extends React.Component {
 
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import MessagePage from '../../MessagePage.jsx';
+import MessagePage from '../../helpers/MessagePage.jsx';
 class ActivateUser extends React.Component {
   static contextTypes = {
     request: React.PropTypes.object.isRequired,

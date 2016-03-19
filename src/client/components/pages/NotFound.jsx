@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as RB from 'react-bootstrap';
 import * as Actions from '../../actions/index.js';
-import MessagePage from '../MessagePage.jsx';
+import MessagePage from '../helpers/MessagePage.jsx';
 
 @connect(state => ({
 }))
